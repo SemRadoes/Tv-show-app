@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tv show search</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
+    <script src="/App.js" defer></script>
+</head>
+<body>
+    <section>
+        <h1>Search Tv Shows</h1>
+        <input type="text" placeholder="search shows" id="searchbar" name="search">
+        <button id="searchButton">Search</button>
+    </section>
+    <section>
+        <h2>All shows</h2>
+        <div id="showlist"></div>
+    </section>
+    <script>
+        $(document).ready(function() { 
+            shows();
+   
+});
+    </script>
+</body>
+</html>
