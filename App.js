@@ -4,42 +4,53 @@ const shows = async () => {
     // console.log(overview.data);
     const res = overview.data;
     const list = res.map(element => {
-        const name =  element.name
-        const genres =  element.genres
-        const language =  element.language
-        const duration =  element.runtime
-        const image =  element.image.medium
-        const summary =  element.summary
-        const showList ={
-            name: name,
-            genres: genres,
-            language: language,
-            duration: duration,
-            image: image,
-            summary: summary
+        return showList ={
+            name: element.name,
+            genres: element.genres,
+            language: element.language,
+            duration: element.runtime,
+            image: element.image.medium,
+            summary: element.summary
         };
-        return showList;
     });
-    const createShowElements = (element, className, textNode, image, summary) => {
-        const para = document.createElement(element);
-        para.classList.add(className);
-        const text = document.createTextNode(textNode);
-        para.appendChild(text);
+    const createShowElements = (element, className, content) => {
+        let para;
+        if (content.slice(0,5) === "https"){
+            para = document.createElement(element);
+            para.src=`${content}`;
+            para.classList.add(className);
+        }else {
+            para = document.createElement(element);
+            para.classList.add(className);
+            const text = document.createTextNode(content);
+            para.appendChild(text);
+        }
+        
         return para;
     };
     const tvShows = document.querySelector('#showlist');
     list.forEach(element => {
         console.log(element);
+        const show = document.createElement('div');
+        console.log(show);
+        show.classList.add('show');
         const name = createShowElements('div', 'name', `${element.name}`);
         const genres = createShowElements('div', 'genres', `${element.genres}`);
         const language = createShowElements('div', 'language', `${element.language}`);
         const duration = createShowElements('div', 'duration', `${element.duration}`);
-        tvShows.appendChild(name);
-        tvShows.appendChild(genres);
-        tvShows.appendChild(language);
-        tvShows.appendChild(duration);
-        return tvShows;
+        const image = createShowElements('img', 'showPoster', `${element.image}`);
+        const summary = document.createElement('p');
+        summary.innerHTML = element.summary;
+        show.appendChild(image);
+        show.appendChild(name);
+        show.appendChild(genres);
+        show.appendChild(language);
+        show.appendChild(duration);
+        show.appendChild(duration);
+        show.appendChild(summary);
+        tvShows.appendChild(show);
     });
+    
 }
 
 

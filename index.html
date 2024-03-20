@@ -8,22 +8,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
     <script src="/App.js" defer></script>
+    <link rel="stylesheet" href="app.css">
 </head>
 <body>
-    <section>
+    <section id="searching">
         <h1>Search Tv Shows</h1>
         <input type="text" placeholder="search shows" id="searchbar" name="search">
         <button id="searchButton">Search</button>
     </section>
-    <section>
+    <section id="showsection">
         <h2>All shows</h2>
-        <div id="showlist"></div>
+        <div id="showlist">
+        </div>
     </section>
     <script>
         $(document).ready(function() { 
             shows();
-   
 });
     </script>
+    
 </body>
 </html>
