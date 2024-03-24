@@ -18,16 +18,22 @@ body{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 100%;
-    gap: 2%;
+    
 }
 
 .show{
     display: flex;
     flex-direction: column;
     width: 300px;
-    gap: 2%;
-    height: fit-content;
+    gap: 5%;
+    padding: 1%;;
 }
+
+.movieScladeOnMouseOver:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+
 
 
