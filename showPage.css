@@ -1,0 +1,48 @@
+body{
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: rgba(19, 16, 16, 0.904);
+   color: rgb(93, 116, 129);
+}
+
+#info{
+    display: flex;
+    gap: 5%;
+    margin-bottom: 20px;
+}
+#showimage{
+    height: auto;
+    width: 400px;
+}
+#showinfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#show{
+    display: flex;
+    flex-direction: column;
+}
+
+.showdiv{
+    margin-bottom: 20px;
+}
+#showname{
+    font-size: 4rem;
+}
+#showgenres{
+    font-size: 1.5rem;
+}
+#episodes{
+    display: flex;
+    gap: 5%;
+}
+
+#showstars::before{
+    content: "✭";
+}
+#showstars{
+    color: goldenrod;
+}

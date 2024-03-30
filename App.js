@@ -23,12 +23,22 @@ const shows = async () => {
             para.src=`${content}`;
             para.classList.add(className);
         }else {
+            if(className === "genres"){
+                let genres = "";
+                const genreArray = content.split(",");
+                genreArray.forEach(element => {
+                    genres += `| ${element} `;
+                });
+                para = document.createElement(element);
+                para.classList.add(className);
+                para.innerHTML = genres;
+            } else {
             para = document.createElement(element);
             para.classList.add(className);
             const text = document.createTextNode(content);
             para.appendChild(text);
+            }
         }
-        
         return para;
     };
     const tvShows = document.querySelector('#showlist');

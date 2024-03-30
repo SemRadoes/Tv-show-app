@@ -4,10 +4,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('./images/jellyfin-plugin-tvmaze.svg');
-    background-repeat: repeat;
-    background-size: contain;
-    background-blend-mode: darken;
+    background-color: #292626;
 }
 #searching{
     display: flex;
@@ -83,5 +80,13 @@ border: 1px solid rgba(161, 161, 161, 0.3);
     content: "✭";
 }
 
+.name{
+    font-size: 1.5rem;
+}
+
+.genres{
+    font-size: 1.rem;
+
+}
 
 
