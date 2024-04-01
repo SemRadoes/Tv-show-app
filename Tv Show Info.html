@@ -21,6 +21,7 @@
                 <div id="showname" class="showdiv">showname</div>
                 <div id="showgenres" class="showdiv">genres</div>
                 <div id="showstars" class="showdiv">stars</div>
+                <div id="country" class="showdiv">canada</div>
             </div>
             <div id="premiered">
                 <h3>Aired:</h3>
@@ -36,7 +37,13 @@
             </div>
         </div>
     </section>
-    <section id="episodes">
+    <section class="nav">
+        <div class="nav-item activeonload" onclick="showInfo(episodes)">episodes</div>
+        <div class="nav-item" onclick="showInfo(posters)">posters</div>
+        <div class="nav-item" onclick="showInfo(crew)">crew</div>
+        <div class="nav-item" onclick="showInfo(cast)">cast</div>
+    </section>
+    <section id="tabs">
         <div class="episodeimage">
             <img src="images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg" height="150px" width="150px" alt="showposter">
         </div>
@@ -50,9 +57,29 @@
 <script>
     $(document).ready(function() { 
         showOfID();
-        showSeasons();
+        showNumOfSeasons();
+        showEpisodes();
     });
-    
-    
+    function showInfo(info){
+        switch(info) {
+  case episodes:
+    // code block
+    break;
+  case seasons:
+    // code block
+    break;
+  case posters:
+    // code block
+    break;
+  case crew:
+    // code block
+    break;
+  case cast:
+    // code block
+    break;
+  default:
+    // code block
+}
+    }
 </script>
 </html>

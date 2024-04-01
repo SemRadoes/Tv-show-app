@@ -1,15 +1,17 @@
 const searchParams = new URLSearchParams(window.location.search);
 const showID = searchParams.get('id');
-const baseURL = `https://api.tvmaze.com/shows/`;
+const baseURL = `https://api.tvmaze.com/`;
+const formatDates = (APIinfo, splitter) =>{
+    const splitted = APIinfo.split(splitter);
+    return `${splitted[2]}/${splitted[1]}/${splitted[0]}`;
+}
 const fillInfo = (element, APIinfo) => {
     if(element === "#showimage"){
-        const image = document.querySelector(`${element}`).src = `${APIinfo}`;
+        document.querySelector(`${element}`).src = `${APIinfo}`;
 
     } else {
         if(element === "#aired"){
-            const splitted = APIinfo.split("-");
-            const aired = `${splitted[2]}/${splitted[1]}/${splitted[0]}`;
-            document.querySelector(`${element}`).innerHTML = aired;
+            document.querySelector(`${element}`).innerHTML = formatDates(APIinfo,"-");
         } else if(element === "#showgenres"){
             let genres = "";
             APIinfo.forEach(element => {
@@ -22,7 +24,7 @@ const fillInfo = (element, APIinfo) => {
     }
 }
 const showOfID = async () => {
-    const overview = await axios.get(`${baseURL}${showID}`);
+    const overview = await axios.get(`${baseURL}shows/${showID}`);
     const res = overview.data;
     console.log(res);
     fillInfo("title", res.name );
@@ -30,14 +32,36 @@ const showOfID = async () => {
     fillInfo("#showname", res.name );
     fillInfo("#showgenres", res.genres );
     fillInfo("#showstars", res.rating.average );
+    fillInfo("#country", res.network.country.name );
     fillInfo("#aired", res.premiered );
     fillInfo("#showdescription", res.summary );
     
 };
 
-const showSeasons = async() => {
-    const overview = await axios.get(`${baseURL}${showID}/seasons`);
+let seasonInfo = [];
+const showEpisodes = async(id) =>{
+        const overview = await axios.get(`${baseURL}shows/${id}/episodes`);
+        const res = overview.data;
+        console.log(res);
+}
+const showNumOfSeasons = async() => {
+    const overview = await axios.get(`${baseURL}shows/${showID}/seasons`);
     const res = overview.data;
     console.log(res);
-    fillInfo("#numofseasons", res.length );
+    fillInfo("#numofseasons", res.length);
+    res.forEach((element) => {
+        seasonInfo.push({
+            id: element.number,
+            apiSeasonId: element.id,
+            aired: formatDates(element.premiereDate, "-"),
+            summary: element.summary,
+            image: element.image.medium
+        });
+        showEpisodes(element.id);
+    });
+    console.log(seasonInfo);
 }
+
+
+
+

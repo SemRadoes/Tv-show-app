@@ -10,6 +10,7 @@ body{
     display: flex;
     gap: 5%;
     margin-bottom: 20px;
+    border-bottom: 1px solid #5D7481;
 }
 #showimage{
     height: auto;
@@ -35,9 +36,38 @@ body{
 #showgenres{
     font-size: 1.5rem;
 }
-#episodes{
+
+.nav{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 2%;
+    margin-bottom: 1%;
+    height: 3rem;
+    gap: 1%;
+}
+
+.nav-item{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: inherit;
+    
+}
+.nav-item:hover{
+    border: 2px solid #5D7481;
+    cursor: pointer;
+}
+
+.activeonload{
+    border: 2px solid #5D7481;
+}
+#tabs{
     display: flex;
     gap: 5%;
+    margin-left: 2%;
 }
 
 #showstars::before{
