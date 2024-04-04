@@ -23,6 +23,31 @@ const fillInfo = (element, APIinfo) => {
         }
     }
 }
+const createEpisodeElements = (element, className, content) => {
+    let para;
+    if (content.slice(0,5) === "https"){
+        para = document.createElement(element);
+        para.src=`${content}`;
+        para.classList.add(className);
+    }else {
+        if(className === "genres"){
+            let genres = "";
+            const genreArray = content.split(",");
+            genreArray.forEach(element => {
+                genres += `| ${element} `;
+            });
+            para = document.createElement(element);
+            para.classList.add(className);
+            para.innerHTML = genres;
+        } else {
+        para = document.createElement(element);
+        para.classList.add(className);
+        const text = document.createTextNode(content);
+        para.appendChild(text);
+        }
+    }
+    return para;
+};
 const showOfID = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}`);
     const res = overview.data;
@@ -39,12 +64,9 @@ const showOfID = async () => {
 };
 
 let seasonInfo = [];
-const showEpisodes = async(id) =>{
-        const overview = await axios.get(`${baseURL}shows/${id}/episodes`);
-        const res = overview.data;
-        console.log(res);
-}
-const showNumOfSeasons = async() => {
+let seasonEpisodes = [];
+
+const showSeasons = async() => {
     const overview = await axios.get(`${baseURL}shows/${showID}/seasons`);
     const res = overview.data;
     console.log(res);
@@ -57,10 +79,26 @@ const showNumOfSeasons = async() => {
             summary: element.summary,
             image: element.image.medium
         });
-        showEpisodes(element.id);
+        
     });
     console.log(seasonInfo);
 }
+
+const showEpisodes = async() =>{
+    for ( let season of seasonInfo){
+        const overview = await axios.get(`${baseURL}shows/${season.apiSeasonId}/episodes`);
+        const res = overview.data;
+        seasonEpisodes.push({
+            id: res.number,
+            name: res.name,
+            summary: res.summary,
+            image: res.image.medium
+        })
+        console.log(res);
+    }
+}
+
+
 
 
 
