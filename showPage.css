@@ -65,11 +65,27 @@ body{
     border: 2px solid #5D7481;
 }
 #tabs{
-    display: flex;
-    gap: 5%;
     margin-left: 2%;
 }
 
+.seasonwrapper{
+    display: flex;
+    gap: 2%;
+    cursor: pointer;
+}
+.seasonimage{
+    width: 300px;
+    height: 300px;
+}
+
+.episodewrapper{
+    display: flex;
+    gap: 2%;
+}
+.episode{
+    display: flex;
+    gap: 2%;
+}
 #showstars::before{
     content: "✭";
 }

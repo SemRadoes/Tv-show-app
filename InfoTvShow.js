@@ -23,31 +23,31 @@ const fillInfo = (element, APIinfo) => {
         }
     }
 }
-const createEpisodeElements = (element, className, content) => {
-    let para;
-    if (content.slice(0,5) === "https"){
-        para = document.createElement(element);
-        para.src=`${content}`;
-        para.classList.add(className);
-    }else {
-        if(className === "genres"){
-            let genres = "";
-            const genreArray = content.split(",");
-            genreArray.forEach(element => {
-                genres += `| ${element} `;
-            });
-            para = document.createElement(element);
-            para.classList.add(className);
-            para.innerHTML = genres;
-        } else {
-        para = document.createElement(element);
-        para.classList.add(className);
-        const text = document.createTextNode(content);
-        para.appendChild(text);
-        }
-    }
-    return para;
-};
+// const createEpisodeElements = (element, className, idName, content) => {
+//     let para;
+//     if (content.slice(0,5) === "https" || content === ""){
+//         para = document.createElement(element);
+//         para.src=`${content}`;
+//         para.classList.add(className);
+//     }else {
+//         if(className === "genres"){
+//             let genres = "";
+//             const genreArray = content.split(",");
+//             genreArray.forEach(element => {
+//                 genres += `| ${element} `;
+//             });
+//             para = document.createElement(element);
+//             para.classList.add(className);
+//             para.innerHTML = genres;
+//         } else {
+//         para = document.createElement(element);
+//         para.classList.add(className);
+//         const text = document.createTextNode(content);
+//         para.appendChild(text);
+//         }
+//     }
+//     return para;
+// };
 const showOfID = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}`);
     const res = overview.data;
@@ -71,17 +71,36 @@ const showSeasons = async() => {
     const res = overview.data;
     console.log(res);
     fillInfo("#numofseasons", res.length);
+    let index = 0;
     res.forEach((element) => {
+        if(index === 0){
+            const image = document.querySelector('#seasonimage1');
+            image.src = element.image.medium;
+            const seasonName = document.querySelector('#season1');
+            seasonName.innerHTML = `Season ${element.number}`
+            const description = document.querySelector('#description1');
+            if(element.summary === ""){
+                description.innerHTML = "No info available";
+            } else {
+                description.innerHTML = `${element.summary}`;
+            }
+        }else{
+            const seasonwrapper = document.querySelector('.seasonwrapper');
+            const newSeasonwrapper = seasonwrapper.cloneNode(true);
+
+        }
         seasonInfo.push({
             id: element.number,
             apiSeasonId: element.id,
             aired: formatDates(element.premiereDate, "-"),
             summary: element.summary,
             image: element.image.medium
-        });       
+        });    
+        index++;   
     });
-    console.log(seasonInfo);
+
 }
+console.log(seasonInfo);
 
 const showEpisodes = async() =>{
     for ( let season of seasonInfo){
@@ -90,13 +109,11 @@ const showEpisodes = async() =>{
         seasonEpisodes.push({
             id: res.number,
             name: res.name,
-            summary: res.summary,
-            image: res.image.medium
+            summary: res.summary
         })
         console.log(res);
     }
 }
-
 
 
 
