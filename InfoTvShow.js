@@ -71,24 +71,32 @@ const showSeasons = async() => {
     const res = overview.data;
     console.log(res);
     fillInfo("#numofseasons", res.length);
-    let index = 0;
     res.forEach((element) => {
-        if(index === 0){
-            const image = document.querySelector('#seasonimage1');
-            image.src = element.image.medium;
-            const seasonName = document.querySelector('#season1');
-            seasonName.innerHTML = `Season ${element.number}`
-            const description = document.querySelector('#description1');
-            if(element.summary === ""){
-                description.innerHTML = "No info available";
-            } else {
-                description.innerHTML = `${element.summary}`;
-            }
-        }else{
-            const seasonwrapper = document.querySelector('.seasonwrapper');
-            const newSeasonwrapper = seasonwrapper.cloneNode(true);
-
+        const table = document.querySelector('#table');
+        const tr = document.createElement('tr');
+        const th = document.createElement('th');
+        const td1 = document.createElement('td');
+        const td2 = document.createElement('td');
+        const td3 = document.createElement('td');
+        const td4 = document.createElement('td');
+        th.innerHTML = `${element.number}`;
+        const image = document.createElement('img');
+        image.src = element.image.medium;
+        td1.appendChild(image);
+        td3.innerHTML = formatDates(element.premiereDate, "-");
+        if(element.summary === ""){
+            td4.innerHTML = "no summary available";  
+        } else {
+            td4.innerHTML = element.summary;    
         }
+        tr.appendChild(th);
+        tr.appendChild(td1);
+        tr.appendChild(td3);
+        tr.appendChild(td4);
+        table.appendChild(tr);
+        const name = `Season ${element.number}`;
+
+
         seasonInfo.push({
             id: element.number,
             apiSeasonId: element.id,
@@ -96,7 +104,6 @@ const showSeasons = async() => {
             summary: element.summary,
             image: element.image.medium
         });    
-        index++;   
     });
 
 }
@@ -111,7 +118,6 @@ const showEpisodes = async() =>{
             name: res.name,
             summary: res.summary
         })
-        console.log(res);
     }
 }
 
