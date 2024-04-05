@@ -78,15 +78,14 @@ const showSeasons = async() => {
             aired: formatDates(element.premiereDate, "-"),
             summary: element.summary,
             image: element.image.medium
-        });
-        
+        });       
     });
     console.log(seasonInfo);
 }
 
 const showEpisodes = async() =>{
     for ( let season of seasonInfo){
-        const overview = await axios.get(`${baseURL}shows/${season.apiSeasonId}/episodes`);
+        const overview = await axios.get(`${baseURL}seasons/${season.apiSeasonId}/episodes`);
         const res = overview.data;
         seasonEpisodes.push({
             id: res.number,
