@@ -72,7 +72,7 @@ const showSeasons = async() => {
     console.log(res);
     fillInfo("#numofseasons", res.length);
     res.forEach((element) => {
-        const table = document.querySelector('#table');
+        const table = document.querySelector('#seasontable');
         const tr = document.createElement('tr');
         const th = document.createElement('th');
         const td1 = document.createElement('td');
@@ -81,44 +81,95 @@ const showSeasons = async() => {
         const td4 = document.createElement('td');
         th.innerHTML = `${element.number}`;
         const image = document.createElement('img');
-        image.src = element.image.medium;
-        td1.appendChild(image);
-        td3.innerHTML = formatDates(element.premiereDate, "-");
-        if(element.summary === ""){
-            td4.innerHTML = "no summary available";  
+        if(element.image === null){
+            image.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
         } else {
-            td4.innerHTML = element.summary;    
+            image.src = element.image.medium;
         }
+        td1.appendChild(image);
+        td2.innerHTML = formatDates(element.premiereDate, "-");
+        if(element.summary === "" || element.summary === null){
+            td3.innerHTML = `<p>no summary available</p>`;  
+        } else {
+            td3.innerHTML = element.summary;    
+        }
+
+        const episodesbutton = document.createElement('BUTTON');
+        episodesbutton.classList.add('btn');
+        episodesbutton.classList.add('btn-light');
+        episodesbutton.setAttribute('id', `season${element.number}`);
+        episodesbutton.innerHTML = `Season ${element.number} episodes`;
+        episodesbutton.addEventListener('click', async function(){
+            showEpisodes(element.id);
+        });
+
+        td4.appendChild(episodesbutton);
         tr.appendChild(th);
         tr.appendChild(td1);
+        tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
         table.appendChild(tr);
-        const name = `Season ${element.number}`;
 
 
-        seasonInfo.push({
-            id: element.number,
-            apiSeasonId: element.id,
-            aired: formatDates(element.premiereDate, "-"),
-            summary: element.summary,
-            image: element.image.medium
-        });    
+        // seasonInfo.push({
+        //     id: element.number,
+        //     apiSeasonId: element.id,
+        //     aired: formatDates(element.premiereDate, "-"),
+        //     summary: element.summary,
+        //     image: element.image.medium
+        // });    
     });
 
 }
-console.log(seasonInfo);
 
-const showEpisodes = async() =>{
-    for ( let season of seasonInfo){
-        const overview = await axios.get(`${baseURL}seasons/${season.apiSeasonId}/episodes`);
-        const res = overview.data;
-        seasonEpisodes.push({
-            id: res.number,
-            name: res.name,
-            summary: res.summary
-        })
+const showEpisodes = async(id) =>{
+    // for ( let season of seasonInfo){
+    //     const overview = await axios.get(`${baseURL}seasons/${season.apiSeasonId}/episodes`);
+    //     const res = overview.data;
+    //     seasonEpisodes.push({
+    //         id: res.number,
+    //         name: res.name,
+    //         summary: res.summary
+    //     })
+    // }
+    const overview = await axios.get(`${baseURL}seasons/${id}/episodes`);
+    const res = overview.data;
+    const table = document.querySelector('#episodetable');
+    for (let episode of res){
+        const tr = document.createElement('tr');
+        const th = document.createElement('th');
+        const td1 = document.createElement('td');
+        const td2 = document.createElement('td');
+        const td3 = document.createElement('td');
+        const td4 = document.createElement('td');
+        th.innerHTML = `${episode.number}`;
+        const image = document.createElement('img');
+        if(episode.image === null){
+            image.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
+        } else {
+            image.src = episode.image.medium;
+        }
+    
+        td1.appendChild(image);
+        td2.innerHTML = formatDates(episode.airdate,"-");
+        td4.innerHTML = episode.name;
+        if(episode.summary === "" || episode.summary === null){
+            td3.innerHTML = `<p>no summary available</p>`;  
+        } else {
+            td3.innerHTML = episode.summary;    
+        }
+
+        tr.appendChild(th);
+        tr.appendChild(td1);
+        tr.appendChild(td4);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        table.appendChild(tr);
     }
+    $('#episodetable').show();
+    $('#seasontable').hide();
+    $('.goBack').show();
 }
 
 

@@ -45,31 +45,26 @@
     </section>
     <section id="tabs">
         <div id="seasontab">
+            <button class="btn btn-light goBack mb-3">return to Seasons</button>
             <table class="table table-dark">
-                <tbody id="table" >
+                <tbody id="seasontable" >
                   <tr>
                     <th>ID</th>
                     <th>IMAGE</th>
                     <th>AIRED</th>
                     <th>SUMMARY</th>
+                    <th>EPISODES</th>
                   </tr>
                 </tbody>
-              </table>
-            <table class="table">
-                <div class="episodewrapper">
-                    <button type="button" class=" goBack btn btn-light" style="height: 30%; width: 50px; color: #5D7481; border: 2px solid #5D7481;">
-                        &#x2190;  
-                    </button>
-                    <div class="episode">
-                        <div class="episodeimage">
-                            <img src="images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg" height="150px" width="150px" alt="showposter">
-                        </div>
-                        <div class="episodeinfo">
-                            <div class="episode">1. The enemy within</div>
-                            <div class="description">description</div>
-                        </div>
-                    </div>
-                </div>
+                <tbody id="episodetable" >
+                  <tr>
+                    <th>ID</th>
+                    <th>IMAGE</th>
+                    <th>NAME</th>
+                    <th>AIRED</th>
+                    <th>SUMMARY</th>
+                  </tr>
+                </tbody>
             </table>
         </div>
         <div id="postertab">
@@ -87,21 +82,20 @@
     $(document).ready(async function() { 
         showOfID();
         await showSeasons();
-        showEpisodes();
+        // showEpisodes();
         $("#postertab").hide();
         $("#crewtab").hide();
         $("#casttab").hide();
-        $('.episodewrapper').hide();
+        $('#episodetable').hide();
+        $('.goBack').hide();
         
     });
-    $('.goBack').click(function() {
-            $('.seasonwrapper').show();
-            $('.episodewrapper').hide();
+    $('.goBack').click(async function() {
+            $('#seasontable').show();
+            $('#episodetable').empty();
+            $('#episodetable').hide();
+            $('.goBack').hide();
         });
-    $('.seasonwrapper').click(function() {
-        $('.seasonwrapper').hide();
-        $('.episodewrapper').show();
-    });
     function showInfo(info){
         switch(info) {
   case episodes:
