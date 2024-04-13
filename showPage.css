@@ -96,3 +96,9 @@ body{
 .table{
     background-color: #292626!important;
 }
+
+#postertab{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;;
+}

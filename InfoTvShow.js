@@ -23,31 +23,7 @@ const fillInfo = (element, APIinfo) => {
         }
     }
 }
-// const createEpisodeElements = (element, className, idName, content) => {
-//     let para;
-//     if (content.slice(0,5) === "https" || content === ""){
-//         para = document.createElement(element);
-//         para.src=`${content}`;
-//         para.classList.add(className);
-//     }else {
-//         if(className === "genres"){
-//             let genres = "";
-//             const genreArray = content.split(",");
-//             genreArray.forEach(element => {
-//                 genres += `| ${element} `;
-//             });
-//             para = document.createElement(element);
-//             para.classList.add(className);
-//             para.innerHTML = genres;
-//         } else {
-//         para = document.createElement(element);
-//         para.classList.add(className);
-//         const text = document.createTextNode(content);
-//         para.appendChild(text);
-//         }
-//     }
-//     return para;
-// };
+
 const showOfID = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}`);
     const res = overview.data;
@@ -62,9 +38,6 @@ const showOfID = async () => {
     fillInfo("#showdescription", res.summary );
     
 };
-
-let seasonInfo = [];
-let seasonEpisodes = [];
 
 const showSeasons = async() => {
     const overview = await axios.get(`${baseURL}shows/${showID}/seasons`);
@@ -110,29 +83,12 @@ const showSeasons = async() => {
         tr.appendChild(td3);
         tr.appendChild(td4);
         table.appendChild(tr);
-
-
-        // seasonInfo.push({
-        //     id: element.number,
-        //     apiSeasonId: element.id,
-        //     aired: formatDates(element.premiereDate, "-"),
-        //     summary: element.summary,
-        //     image: element.image.medium
-        // });    
-    });
-
+    }
+    )
 }
 
 const showEpisodes = async(id) =>{
-    // for ( let season of seasonInfo){
-    //     const overview = await axios.get(`${baseURL}seasons/${season.apiSeasonId}/episodes`);
-    //     const res = overview.data;
-    //     seasonEpisodes.push({
-    //         id: res.number,
-    //         name: res.name,
-    //         summary: res.summary
-    //     })
-    // }
+    
     const overview = await axios.get(`${baseURL}seasons/${id}/episodes`);
     const res = overview.data;
     const table = document.querySelector('#episodetable');
@@ -143,10 +99,16 @@ const showEpisodes = async(id) =>{
         const td2 = document.createElement('td');
         const td3 = document.createElement('td');
         const td4 = document.createElement('td');
-        th.innerHTML = `${episode.number}`;
+        if(episode.number === null){
+            th.innerHTML = ``;
+        } else {
+            th.innerHTML = `${episode.number}`;
+        }
         const image = document.createElement('img');
         if(episode.image === null){
             image.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
+            image.style.height = "140px";
+            image.style.width = "250px";
         } else {
             image.src = episode.image.medium;
         }
@@ -171,6 +133,19 @@ const showEpisodes = async(id) =>{
     $('#seasontable').hide();
     $('.goBack').show();
 }
+
+const showPosters = async () => {
+    const overview = await axios.get(`${baseURL}shows/${showID}/images`);
+    const res = overview.data;
+    for (posters of res){
+        console.log(posters);
+        const image = document.createElement('img');
+        image.src = posters.resolutions.medium;
+        const posterTab = document.querySelector('#postertab');
+        posterTab.appendChild(image);
+    }
+    
+};
 
 
 

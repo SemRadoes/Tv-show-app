@@ -39,7 +39,6 @@
     </section>
     <section class="nav">
         <div class="nav-item activeonload" onclick="showInfo(episodes)">episodes</div>
-        <div class="nav-item" onclick="showInfo(posters)">posters</div>
         <div class="nav-item" onclick="showInfo(crew)">crew</div>
         <div class="nav-item" onclick="showInfo(cast)">cast</div>
     </section>
@@ -67,9 +66,6 @@
                 </tbody>
             </table>
         </div>
-        <div id="postertab">
-            
-        </div>
         <div id="crewtab">
             
         </div>
@@ -81,14 +77,13 @@
 <script>
     $(document).ready(async function() { 
         showOfID();
-        await showSeasons();
-        // showEpisodes();
+        showSeasons();
         $("#postertab").hide();
         $("#crewtab").hide();
         $("#casttab").hide();
         $('#episodetable').hide();
         $('.goBack').hide();
-        
+        showPosters();
     });
     $('.goBack').click(async function() {
             $('#seasontable').show();
@@ -99,10 +94,12 @@
     function showInfo(info){
         switch(info) {
   case episodes:
-    
-    break;
-  case seasons:
-    // code block
+  $("#postertab").hide();
+        $("#crewtab").hide();
+        $("#casttab").hide();
+        $('#episodetable').hide();
+        $('#episodetable').empty();
+        $('.goBack').hide();
     break;
   case posters:
     // code block
