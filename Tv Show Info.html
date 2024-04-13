@@ -38,9 +38,9 @@
         </div>
     </section>
     <section class="nav">
-        <div class="nav-item activeonload" onclick="showInfo(episodes)">episodes</div>
-        <div class="nav-item" onclick="showInfo(crew)">crew</div>
-        <div class="nav-item" onclick="showInfo(cast)">cast</div>
+        <div class="nav-item activeonload" id="episodeButton" onclick="showInfo('episodes')">episodes</div>
+        <div class="nav-item" id="crewButton" onclick="showInfo('crew')">crew</div>
+        <div class="nav-item" id="castButton" onclick="showInfo('cast')">cast</div>
     </section>
     <section id="tabs">
         <div id="seasontab">
@@ -83,7 +83,6 @@
         $("#casttab").hide();
         $('#episodetable').hide();
         $('.goBack').hide();
-        showPosters();
     });
     $('.goBack').click(async function() {
             $('#seasontable').show();
@@ -93,26 +92,44 @@
         });
     function showInfo(info){
         switch(info) {
-  case episodes:
-  $("#postertab").hide();
-        $("#crewtab").hide();
-        $("#casttab").hide();
-        $('#episodetable').hide();
-        $('#episodetable').empty();
-        $('.goBack').hide();
-    break;
-  case posters:
-    // code block
-    break;
-  case crew:
-    // code block
-    break;
-  case cast:
-    // code block
-    break;
-  default:
-    // code block
-}
+            case "episodes":
+                $('.goBack').hide();
+                $("#crewtab").hide();
+                $("#casttab").hide();
+                $('#episodetable').hide();
+                $('#episodetable').empty();
+                $('#seasontable').show();
+                $("#crewButton").removeClass('activeonload');
+                $('#episodeButton').addClass('activeonload');
+                $('#castButton').removeClass('activeonload');
+                break;
+            case "crew":
+                showCrew();
+                $('.goBack').hide();
+                $("#crewtab").show();
+                $('#seasontable').hide();
+                $('#episodetable').hide();
+                $('#episodetable').empty();
+                $("#casttab").hide();
+                $("#crewButton").addClass('activeonload');
+                $('#episodeButton').removeClass('activeonload');
+                $('#castButton').removeClass('activeonload');
+                break;
+            case "cast":
+                $('.goBack').hide();
+                $("#crewtab").hide();
+                $("#crewtab").empty();
+                $("#casttab").show();
+                $('#seasontable').hide();
+                $('#episodetable').hide();
+                $('#episodetable').empty();
+                $("#crewButton").removeClass('activeonload');
+                $('#episodeButton').removeClass('activeonload');
+                $('#castButton').addClass('activeonload');
+                break;
+            default:
+                // code block
+        }
     }
 </script>
 </html>

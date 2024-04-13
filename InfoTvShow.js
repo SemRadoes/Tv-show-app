@@ -134,17 +134,49 @@ const showEpisodes = async(id) =>{
     $('.goBack').show();
 }
 
-const showPosters = async () => {
-    const overview = await axios.get(`${baseURL}shows/${showID}/images`);
-    const res = overview.data;
-    for (posters of res){
-        console.log(posters);
-        const image = document.createElement('img');
-        image.src = posters.resolutions.medium;
-        const posterTab = document.querySelector('#postertab');
-        posterTab.appendChild(image);
+const showCrew = async () => {
+    const overview = await axios.get(`${baseURL}shows/${showID}/crew`);
+    const crew = overview.data;
+    const names = [];
+    let index = 0;
+    for (let crewMember of crew){
+        if(names.includes(crewMember.person.name)){
+            console.log(crewMember);
+            const existingWrapper = document.querySelector(`#crew-function${index - 1}`);
+            existingWrapper.innerHTML += `<br>| ${crewMember.type}`;
+        } else {
+            const crewWrapper = document.querySelector('#crewtab');
+            const crewMamberWrapper = document.createElement('div');
+            crewMamberWrapper.setAttribute('id', `crew-wrapper${index}`);
+            crewMamberWrapper.classList.add(`crew-wrapper`);
+            const  crewImage = document.createElement('img');
+            const  crewName = document.createElement('p');
+            const  crewFunction = document.createElement('p');
+            if(crewMember.person.image === null){
+                crewImage.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
+                crewImage.style.height = "382px";
+                crewImage.style.width = "272px";
+                crewImage.style.borderRadius = "10px";
+            } else {
+                crewImage.src = crewMember.person.image.medium;
+                crewImage.style.borderRadius = "10px";
+            }
+            crewName.innerHTML = crewMember.person.name;
+            crewFunction.innerHTML = `| ${crewMember.type}`;
+            crewImage.setAttribute('id', `crew-image${index}`);
+            crewImage.classList.add(`crew-image`);
+            crewName.setAttribute('id', `crew-name${index}`);
+            crewName.classList.add(`crew-name`);
+            crewFunction.setAttribute('id',`crew-function${index}`);
+            crewFunction.classList.add(`crew-function`);
+            crewMamberWrapper.appendChild(crewImage);
+            crewMamberWrapper.appendChild(crewName);
+            crewMamberWrapper.appendChild(crewFunction);
+            crewWrapper.appendChild(crewMamberWrapper);
+            names.push(crewMember.person.name);
+        }
+        index++;
     }
-    
 };
 
 
