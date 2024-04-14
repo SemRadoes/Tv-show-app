@@ -141,7 +141,6 @@ const showCrew = async () => {
     let index = 0;
     for (let crewMember of crew){
         if(names.includes(crewMember.person.name)){
-            console.log(crewMember);
             const existingWrapper = document.querySelector(`#crew-function${index - 1}`);
             existingWrapper.innerHTML += `<br>| ${crewMember.type}`;
         } else {
@@ -153,12 +152,14 @@ const showCrew = async () => {
             const  crewName = document.createElement('p');
             const  crewFunction = document.createElement('p');
             if(crewMember.person.image === null){
-                crewImage.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
+                crewImage.src = "images/noimageavailable.gif";
                 crewImage.style.height = "382px";
                 crewImage.style.width = "272px";
                 crewImage.style.borderRadius = "10px";
             } else {
                 crewImage.src = crewMember.person.image.medium;
+                crewImage.style.height = "382px";
+                crewImage.style.width = "272px";
                 crewImage.style.borderRadius = "10px";
             }
             crewName.innerHTML = crewMember.person.name;
@@ -174,7 +175,73 @@ const showCrew = async () => {
             crewMamberWrapper.appendChild(crewFunction);
             crewWrapper.appendChild(crewMamberWrapper);
             names.push(crewMember.person.name);
+            index++;
         }
+    }
+}
+const showCast = async () => {
+    const overview = await axios.get(`${baseURL}shows/${showID}/cast`);
+    const cast = overview.data;
+    let index = 0;
+    for (let castMember of cast){
+        console.log(castMember);
+        const castTab = document.querySelector('#casttab');
+        const castWrapper = document.createElement('div');
+        const characterWrapper = document.createElement('div');
+        const personWrapper = document.createElement('div');
+        const betweenLine = document.createElement('div');
+        castWrapper.setAttribute('id', `cast-wrapper${index}`);
+        castWrapper.classList.add(`cast-wrapper`);
+        characterWrapper.setAttribute('id', `character-wrapper${index}`);
+        characterWrapper.classList.add(`character-wrapper`);
+        personWrapper.setAttribute('id', `person-wrapper${index}`);
+        personWrapper.classList.add(`person-wrapper`);
+        betweenLine.setAttribute('id', `betweenLine${index}`);
+        betweenLine.classList.add(`betweenLine`);
+        const  characterImage = document.createElement('img');
+        const  characterName = document.createElement('p');
+        const  personImage = document.createElement('img');
+        const  personName = document.createElement('p');
+        if(castMember.person.image === null){
+            personImage.src = "images/noimageavailable.gif";
+            personImage.style.height = "382px";
+            personImage.style.width = "272px";
+            personImage.style.borderRadius = "10px";
+        } else {
+            personImage.src = castMember.person.image.medium;
+            personImage.style.height = "382px";
+            personImage.style.width = "272px";
+            personImage.style.borderRadius = "10px";
+        }
+        if(castMember.character.image === null){
+            characterImage.src = "images/noimageavailable.gif";
+            characterImage.style.height = "382px";
+            characterImage.style.width = "272px";
+            characterImage.style.borderRadius = "10px";
+        } else {
+            characterImage.src = castMember.character.image.medium;
+            characterImage.style.height = "382px";
+            characterImage.style.width = "272px";
+            characterImage.style.borderRadius = "10px";
+        }
+        characterName.innerHTML = `<strong>Character</strong>: ${castMember.character.name}`;
+        personName.innerHTML = `<strong>Name</strong>: ${castMember.person.name}`;
+        personImage.setAttribute('id', `person-image${index}`);
+        characterImage.setAttribute('id', `character-image${index}`);
+        personImage.classList.add(`person-image`);
+        characterImage.classList.add(`character-image`);
+        personName.setAttribute('id', `person-name${index}`);
+        personName.classList.add(`person-name`);
+        characterName.setAttribute('id', `character-name${index}`);
+        characterName.classList.add(`character-name`);
+        characterWrapper.appendChild(characterImage);
+        characterWrapper.appendChild(characterName);
+        personWrapper.appendChild(personImage);
+        personWrapper.appendChild(personName);
+        castWrapper.appendChild(characterWrapper);
+        castWrapper.appendChild(betweenLine);
+        castWrapper.appendChild(personWrapper);
+        castTab.appendChild(castWrapper);
         index++;
     }
 };
