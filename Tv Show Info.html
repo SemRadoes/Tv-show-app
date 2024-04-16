@@ -48,29 +48,31 @@
             <table class="table table-dark">
                 <tbody id="seasontable" >
                   <tr>
-                    <th>ID</th>
-                    <th>IMAGE</th>
-                    <th>AIRED</th>
-                    <th>SUMMARY</th>
-                    <th>EPISODES</th>
-                  </tr>
+                      <th>ID</th>
+                      <th>IMAGE</th>
+                      <th>AIRED</th>
+                      <th>SUMMARY</th>
+                      <th>EPISODES</th>
+                    </tr>
                 </tbody>
                 <tbody id="episodetable" >
                   <tr>
-                    <th>ID</th>
+                      <th>ID</th>
                     <th>IMAGE</th>
                     <th>NAME</th>
                     <th>AIRED</th>
                     <th>SUMMARY</th>
-                  </tr>
-                </tbody>
-            </table>
-        </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
         <div id="crewtab">
             
         </div>
         <div id="casttab">
-            
+            <button class="btn btn-light goBack mb-3">return to cast</button>
+            <div class="character-tab"></div>
+            <div class="person-tab"></div>
         </div>
     </section>
 </body>
@@ -85,8 +87,8 @@
         $('.goBack').hide();
     });
     $('.goBack').click(async function() {
-            $('#seasontable').show();
-            $('#episodetable').empty();
+        $('#seasontable').show();
+        $('#episodetable').empty();
             $('#episodetable').hide();
             $('.goBack').hide();
         });
@@ -121,6 +123,8 @@
                 $("#crewtab").hide();
                 $("#crewtab").empty();
                 $("#casttab").show();
+                $(".person-tab").hide();
+                $(".character-tab").hide();
                 $('#seasontable').hide();
                 $('#episodetable').hide();
                 $('#episodetable').empty();

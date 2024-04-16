@@ -150,6 +150,23 @@ body{
 }
 
 .betweenLine{
-    height: 100%;
-    border: 2px solid #5D7481;
+    height: 85%;
+    width: 5px;
+    background-color: #5D7481;
+}
+
+.character-name{
+    font-size: 20px;
+}
+.character-name:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.person-name{
+    font-size: 30px;
+}
+.person-name:hover{
+    text-decoration: underline;
+    cursor: pointer;
 }

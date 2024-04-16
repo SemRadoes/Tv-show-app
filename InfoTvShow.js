@@ -224,23 +224,31 @@ const showCast = async () => {
             characterImage.style.width = "272px";
             characterImage.style.borderRadius = "10px";
         }
-        characterName.innerHTML = `<strong>Character</strong>: ${castMember.character.name}`;
-        personName.innerHTML = `<strong>Name</strong>: ${castMember.person.name}`;
+        characterName.innerHTML = `${castMember.character.name}`;
+        personName.innerHTML = `${castMember.person.name}`;
         personImage.setAttribute('id', `person-image${index}`);
         characterImage.setAttribute('id', `character-image${index}`);
         personImage.classList.add(`person-image`);
         characterImage.classList.add(`character-image`);
         personName.setAttribute('id', `person-name${index}`);
         personName.classList.add(`person-name`);
+        personName.addEventListener("click",async () => {
+            const castPerson = await axios.get(`${baseURL}people/${castMember.person.id}`);
+            console.log(castPerson);
+        });
         characterName.setAttribute('id', `character-name${index}`);
         characterName.classList.add(`character-name`);
-        characterWrapper.appendChild(characterImage);
-        characterWrapper.appendChild(characterName);
+        characterName.addEventListener("click",async () => {
+            const castcharacter = await axios.get(`${baseURL}characters/${castMember.character.id}`);
+            console.log(castcharacter);
+        });
         personWrapper.appendChild(personImage);
         personWrapper.appendChild(personName);
-        castWrapper.appendChild(characterWrapper);
-        castWrapper.appendChild(betweenLine);
+        characterWrapper.appendChild(characterImage);
+        characterWrapper.appendChild(characterName);
         castWrapper.appendChild(personWrapper);
+        castWrapper.appendChild(betweenLine);
+        castWrapper.appendChild(characterWrapper);
         castTab.appendChild(castWrapper);
         index++;
     }
