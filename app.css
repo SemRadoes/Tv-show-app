@@ -19,24 +19,34 @@ backdrop-filter: blur(20px);
 -webkit-backdrop-filter: blur(20px);
 width: 100%;
 }
+.main-section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
 
 #showsection{
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    width: 100%;
-    row-gap: 10%;
+    flex-grow: 1;
 }
-
+#shows{
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
 #showlist{
     display: flex;
-    justify-content: space-evenly;
+    width:60%;
+    gap: 30px;
     flex-wrap: wrap;
 }
 
 .show{
-    color: white;
+    color: rgb(24, 6, 6);
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -87,6 +97,22 @@ border: 1px solid rgba(161, 161, 161, 0.3);
 .genres{
     font-size: 1rem;
 
+}
+
+.dropdowns{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+    margin-top: 50px;
+    width: 20%;
+    position:sticky;
+    top: 20px;
+}
+
+select{
+    width: 70%;
 }
 
 

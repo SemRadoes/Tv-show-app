@@ -22,16 +22,41 @@
             </div>
         </div>
     </section>
-    <section id="showsection">
-        <h2 style="color: white">All shows</h2>
-        <div id="showlist">
-        </div>
-    </section>
+    <div class="main-section">
+        <section id="showsection">
+            <h2 style="color: white;" class="mt-3">All shows</h2>
+        </section>
+        <section id="shows">
+            <div id="showlist">
+    
+            </div>
+            <div class="dropdowns">
+                <select id="genre" class="form-select" onchange="filterShows('genre')" aria-label="Default select example">
+                    <option selected value="default">select genre</option>
+                  </select>
+                  <select id="language" class="form-select" onchange="filterShows('language')" aria-label="Default select example">
+                    <option selected>select language</option>
+                  </select>
+                  <select id="rating" class="form-select" onchange="filterShows('rating')" aria-label="Default select example">
+                    <option selected>select rating</option>
+                    <option >2+</option>
+                    <option >3+</option>
+                    <option >4+</option>
+                    <option >5+</option>
+                    <option >6+</option>
+                    <option >7+</option>
+                    <option >8+</option>
+                    <option >9+</option>
+                  </select>
+            </div>
+        </section>
+    </div>
     <script>
         $(document).ready(function() { 
             shows();
+            createDropdowns("genre");
+            createDropdowns("language");
         });
-        
         
     </script>
     
