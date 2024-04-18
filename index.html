@@ -31,23 +31,21 @@
     
             </div>
             <div class="dropdowns">
-                <select id="genre" class="form-select" onchange="filterShows('genre')" aria-label="Default select example">
+                <select id="genre" class="form-select" aria-label="Default select example">
                     <option selected value="default">select genre</option>
                   </select>
-                  <select id="language" class="form-select" onchange="filterShows('language')" aria-label="Default select example">
-                    <option selected>select language</option>
+                  <select id="rating" class="form-select" aria-label="Default select example">
+                    <option selected value="default">select rating</option>
+                    <option value="2">2+</option>
+                    <option value="3">3+</option>
+                    <option value="4">4+</option>
+                    <option value="5">5+</option>
+                    <option value="6">6+</option>
+                    <option value="7">7+</option>
+                    <option value="8">8+</option>
+                    <option value="9">9+</option>
                   </select>
-                  <select id="rating" class="form-select" onchange="filterShows('rating')" aria-label="Default select example">
-                    <option selected>select rating</option>
-                    <option >2+</option>
-                    <option >3+</option>
-                    <option >4+</option>
-                    <option >5+</option>
-                    <option >6+</option>
-                    <option >7+</option>
-                    <option >8+</option>
-                    <option >9+</option>
-                  </select>
+                  <button class="btn btn-secondary w-50" onclick="filterShows()">Filter</button>
             </div>
         </section>
     </div>
@@ -55,7 +53,6 @@
         $(document).ready(function() { 
             shows();
             createDropdowns("genre");
-            createDropdowns("language");
         });
         
     </script>
