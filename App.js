@@ -49,12 +49,13 @@ const showsWithFiltering = (arg, element) => {
         location.href=`/Tv Show Info.html?id=${arg.id}`;
     });
 }
-const shows = async () => {
+let list = [];
+const showInterface = async() => {
     const overview = await axios.get(baseURL);
     console.log(overview.data);
     const res = overview.data;
-    const list = res.map(element => {
-        return showList ={
+    list = res.map(element => {
+        return interface = {
             id: element.id,
             name: element.name,
             genres: element.genres,
@@ -65,30 +66,14 @@ const shows = async () => {
             premiered: element.premiered.slice(0,4),
         };
     });
+    console.log(list);
+    return list;
+}
+const shows = async () => {
+    await showInterface();
     const tvShows = document.querySelector('#showlist');
     list.forEach(element => {
-        const show = document.createElement('div');
-        show.classList.add('show');
-        const name = createShowElements('div', 'name', `${element.name}`);
-        const genres = createShowElements('div', 'genres', `${element.genres}`);
-        const image = createShowElements('img', 'showPoster', `${element.image}`);
-        const rating = createShowElements('div', 'rating', `${element.rating}`);
-        const premiered = createShowElements('div', 'premiered', `${element.premiered}`);
-        const nameRating = document.createElement('div');
-        nameRating.classList.add('nameRating');
-        nameRating.appendChild(name);
-        nameRating.appendChild(rating);
-        show.appendChild(image);
-        show.appendChild(nameRating);
-        show.appendChild(genres);
-        show.appendChild(premiered);
-        tvShows.appendChild(show);
-        show.addEventListener("mouseover", () => {
-            show.classList.add("movieScladeOnMouseOver");
-        });
-        show.addEventListener("click", () => {
-            location.href=`/Tv Show Info.html?id=${element.id}`;
-        });
+        showsWithFiltering(element, tvShows);
     });
 }
 
@@ -115,20 +100,7 @@ const createDropdowns = async (keyword) => {
 }
 
 const filterShows = async () => {
-    const overview = await axios.get(baseURL);
-    const res = overview.data;
-    const list = res.map(element => {
-        return {
-            id: element.id,
-            name: element.name,
-            genres: element.genres,
-            language: element.language,
-            duration: element.runtime,
-            image: element.image.medium,
-            rating: element.rating.average,
-            premiered: element.premiered.slice(0,4),
-        };
-    });
+    await showInterface();
     $('#showlist').empty();
     const genre = $('#genre').val();
     const rating = $('#rating').val();
@@ -138,8 +110,17 @@ const filterShows = async () => {
             showsWithFiltering(show, tvShows);
         } else if(show.rating >= rating && genre === "default"){
             showsWithFiltering(show, tvShows);
-        } else if(rating === "default" && show.genres.includes(genre))
+        } else if(rating === "default" && show.genres.includes(genre)){
             showsWithFiltering(show, tvShows);
+        }
     }
 }
 
+const resetShows = async () => {
+    await showInterface();
+    $('#showlist').empty();
+    const tvShows = document.querySelector('#showlist');
+    for (let show of list){
+            showsWithFiltering(show, tvShows);
+    }
+}
