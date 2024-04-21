@@ -41,7 +41,7 @@ const showsWithFiltering = (arg, element) => {
     filteredShow.appendChild(nameRating);
     filteredShow.appendChild(genres);
     filteredShow.appendChild(premiered);
-    element.appendChild(filteredShow);
+    $(filteredShow).hide().appendTo(element).fadeIn(1000);
     filteredShow.addEventListener("mouseover", () => {
         filteredShow.classList.add("movieScladeOnMouseOver");
     });
@@ -50,23 +50,54 @@ const showsWithFiltering = (arg, element) => {
     });
 }
 let list = [];
-const showInterface = async() => {
-    const overview = await axios.get(baseURL);
-    console.log(overview.data);
-    const res = overview.data;
-    list = res.map(element => {
-        return interface = {
-            id: element.id,
-            name: element.name,
-            genres: element.genres,
-            language: element.language,
-            duration: element.runtime,
-            image: element.image.medium,
-            rating: element.rating.average,
-            premiered: element.premiered.slice(0,4),
-        };
-    });
-    console.log(list);
+const showInterface = async(arg) => {
+    let overview;
+    if(arg){
+        overview = await axios.get(`https://api.tvmaze.com/search/shows?q=${arg}`);
+        const res = overview.data;
+        console.log(overview.data);
+        list = res.map(element => {
+            if(element.show.image !== null || element.show.genres.length || element.show.runtime !== null || element.show.rating.average !== null || element.show.premiered !== null){
+                return interface = {
+                id: element.show.id,
+                name: element.show.name,
+                genres: element.show.genres,
+                language: element.show.language,
+                duration: element.show.runtime,
+                image: element.show.image.medium,
+                rating: element.show.rating.average,
+                premiered: element.show.premiered.slice(0,4)
+                };
+            } else {
+                return interface = {
+                    id: element.show.id,
+                    name: element.show.name,
+                    genres: "unknown",
+                    language: element.show.language,
+                    duration: "unknown",
+                    image: "unknown",
+                    rating: "unknown",
+                    premiered: "unknown"
+                    };
+            }
+        });
+    } else {
+        overview = await axios.get(baseURL);
+        const res = overview.data;
+        console.log(overview.data);
+        list = res.map(element => {
+            return interface = {
+                id: element.id,
+                name: element.name,
+                genres: element.genres,
+                language: element.language,
+                duration: element.runtime,
+                image: element.image.medium,
+                rating: element.rating.average,
+                premiered: element.premiered.slice(0,4),
+            };
+        });
+    }
     return list;
 }
 const shows = async () => {
@@ -104,15 +135,77 @@ const filterShows = async () => {
     $('#showlist').empty();
     const genre = $('#genre').val();
     const rating = $('#rating').val();
+    let starOrder = $('#sort-by-stars').val();
+    let alphab = $('#sort-by-alphabet').val();
     const tvShows = document.querySelector('#showlist');
+    let index = 0;
+    if(starOrder !== "default"){
+        alphab = "default";
+        document.querySelector('#alphabetDefault').selected = 'selected';
+        switch(starOrder){
+            case "ascending":
+                list.sort((a, b) => a.rating - b.rating);
+
+                break
+            case "descending":
+                list.sort((a, b) => b.rating - a.rating);
+                break
+            default:
+                break
+        }
+    } else if(alphab !== "default" && starOrder === "default" || starOrder === "ascending" || starOrder === "descending"){
+    switch(alphab){
+        case "A-Z":
+            list.sort((a, b) => {
+                const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                  return -1;
+                }
+                if (nameA > nameB) {
+                  return 1;
+                }
+              
+                // names must be equal
+                return 0;
+              });
+            break
+        case "Z-A":
+            list.sort((a, b) => {
+                const nameA = a.name.toUpperCase(); // ignore upper and lowercase
+                const nameB = b.name.toUpperCase(); // ignore upper and lowercase
+                if (nameA > nameB) {
+                  return -1;
+                }
+                if (nameA < nameB) {
+                  return 1;
+                }
+              
+                // names must be equal
+                return 0;
+              });
+            break
+        default:
+            break
+    }
+}
     for (let show of list){
         if(show.genres.includes(genre) && show.rating >= rating){
             showsWithFiltering(show, tvShows);
+            index++;
         } else if(show.rating >= rating && genre === "default"){
             showsWithFiltering(show, tvShows);
+            index++;
         } else if(rating === "default" && show.genres.includes(genre)){
             showsWithFiltering(show, tvShows);
+            index++;
+        } else if(rating === "default" && genre === "default"){
+            showsWithFiltering(show, tvShows);
+            index++;
         }
+    }
+    if(index === 0){
+        tvShows.innerHTML = "<h3 style='color: rgb(93, 116, 129);'>No search results</h3>";
     }
 }
 
@@ -124,3 +217,14 @@ const resetShows = async () => {
             showsWithFiltering(show, tvShows);
     }
 }
+
+const searchQuery = async() => {
+    const input = $('#searchQuery').val();
+    $('#showlist').empty();
+    await showInterface(input);
+    const tvShows = document.querySelector('#showlist');
+    for (let show of list){
+        showsWithFiltering(show, tvShows);
+    }
+}
+

@@ -16,9 +16,9 @@
 <body>
     <section id="searching">
         <div class="input-group" style="width: 50%">
-            <input type="text" class="form-control" placeholder="Search Tv shows" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" id="searchQuery" placeholder="Search Tv shows" aria-label="Recipient's username" aria-describedby="basic-addon2">
             <div class="input-group-append">
-                <button class="btn btn-outline-primary" type="button">Search</button>
+                <button class="btn btn-outline-primary" type="button" onclick="searchQuery()">Search</button>
             </div>
         </div>
     </section>
@@ -45,6 +45,18 @@
                     <option value="8">8+</option>
                     <option value="9">9+</option>
                   </select>
+                  <div class="sorting">
+                      <select class="form-select" id="sort-by-stars">
+                        <option id="starsDefault" value="default">Sort by stars</option>
+                        <option value="asending">Ascending &uarr;</option>
+                        <option value="descending">Descending &darr;</option>
+                      </select>
+                      <select class="form-select" id="sort-by-alphabet">
+                        <option id="alphabetDefault" value="default">Sort alphabetically</option>
+                        <option value="A-Z">A-Z</option>
+                        <option value="Z-A">Z-A</option>
+                      </select>
+                  </div>
                   <div class="buttons">
                       <button class="btn btn-secondary w-50" onclick="filterShows()">Filter</button>
                       <button class="btn btn-secondary w-50" onclick="resetShows()">Reset</button>

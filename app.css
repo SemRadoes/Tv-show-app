@@ -115,6 +115,11 @@ select{
     width: 100%;
 }
 
+.sorting{
+    display: flex;
+    gap: 20px;
+}
+
 .buttons{
     display: flex;
     gap: 20px;
