@@ -31,6 +31,19 @@
     
             </div>
             <div class="dropdowns">
+                <div class="sorting">
+                    <select class="form-select" id="sort-by-stars">
+                      <option id="starsDefault" value="default">Sort by stars</option>
+                      <option value="ascending">Ascending &uarr;</option>
+                      <option value="descending">Descending &darr;</option>
+                    </select>
+                    <p id="or">or</p>
+                    <select class="form-select" id="sort-by-alphabet">
+                      <option id="alphabetDefault" value="default">Sort alphabetically</option>
+                      <option value="A-Z">A-Z</option>
+                      <option value="Z-A">Z-A</option>
+                    </select>
+                </div>
                 <select id="genre" class="form-select" aria-label="Default select example">
                     <option selected value="default">select genre</option>
                   </select>
@@ -45,18 +58,6 @@
                     <option value="8">8+</option>
                     <option value="9">9+</option>
                   </select>
-                  <div class="sorting">
-                      <select class="form-select" id="sort-by-stars">
-                        <option id="starsDefault" value="default">Sort by stars</option>
-                        <option value="asending">Ascending &uarr;</option>
-                        <option value="descending">Descending &darr;</option>
-                      </select>
-                      <select class="form-select" id="sort-by-alphabet">
-                        <option id="alphabetDefault" value="default">Sort alphabetically</option>
-                        <option value="A-Z">A-Z</option>
-                        <option value="Z-A">Z-A</option>
-                      </select>
-                  </div>
                   <div class="buttons">
                       <button class="btn btn-secondary w-50" onclick="filterShows()">Filter</button>
                       <button class="btn btn-secondary w-50" onclick="resetShows()">Reset</button>

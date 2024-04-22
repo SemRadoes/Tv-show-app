@@ -128,31 +128,16 @@ body{
 #casttab{
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 50px;
 }
 
-.cast-wrapper{
-    display: flex;
-    gap: 10px;
-    border: 5px solid #5D7481;
-    border-radius: 20px;
-    padding: 10px;
-}
 .character-wrapper{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-.person-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.betweenLine{
-    height: 85%;
-    width: 5px;
-    background-color: #5D7481;
+    border: 5px solid #5D7481;
+    border-radius: 20px;
+    padding: 10px;
 }
 
 .character-name{

@@ -9,18 +9,27 @@ const createShowElements = (element, className, content) => {
     }else {
         if(className === "genres"){
             let genres = "";
-            const genreArray = content.split(",");
-            genreArray.forEach(element => {
-                genres += `| ${element} `;
-            });
             para = document.createElement(element);
             para.classList.add(className);
-            para.innerHTML = genres;
+            if(content.length !== 0){
+                const genreArray = content.split(",");
+                genreArray.forEach(element => {
+                    genres += `| ${element} `;
+                });
+                para.innerHTML = genres;
+            } else {
+                para.innerHTML = genres += "| no info available";
+            }
         } else {
-        para = document.createElement(element);
-        para.classList.add(className);
-        const text = document.createTextNode(content);
-        para.appendChild(text);
+            para = document.createElement(element);
+            para.classList.add(className);
+            let text;
+            if(content === "null" || content === ""){
+                text = document.createTextNode("-");
+            } else {
+                text = document.createTextNode(content);
+            }
+            para.appendChild(text);
         }
     }
     return para;
@@ -145,7 +154,6 @@ const filterShows = async () => {
         switch(starOrder){
             case "ascending":
                 list.sort((a, b) => a.rating - b.rating);
-
                 break
             case "descending":
                 list.sort((a, b) => b.rating - a.rating);
@@ -153,7 +161,9 @@ const filterShows = async () => {
             default:
                 break
         }
-    } else if(alphab !== "default" && starOrder === "default" || starOrder === "ascending" || starOrder === "descending"){
+    } else if(alphab !== "default"){
+        starOrder = "default";
+        document.querySelector('#starsDefault').selected = 'selected';
     switch(alphab){
         case "A-Z":
             list.sort((a, b) => {

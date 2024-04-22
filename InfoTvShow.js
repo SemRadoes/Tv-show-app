@@ -8,16 +8,19 @@ const formatDates = (APIinfo, splitter) =>{
 const fillInfo = (element, APIinfo) => {
     if(element === "#showimage"){
         document.querySelector(`${element}`).src = `${APIinfo}`;
-
     } else {
         if(element === "#aired"){
             document.querySelector(`${element}`).innerHTML = formatDates(APIinfo,"-");
         } else if(element === "#showgenres"){
             let genres = "";
-            APIinfo.forEach(element => {
-                genres += `| ${element} `;
-            });
-            document.querySelector(`${element}`).innerHTML = genres;
+            if(APIinfo.length !== 0){
+                APIinfo.forEach(element => {
+                    genres += `| ${element} `;
+                });
+                document.querySelector(`${element}`).innerHTML = genres;
+            } else {
+                document.querySelector(`${element}`).innerHTML = "| no info available";
+            }
         } else {
             document.querySelector(`${element}`).innerHTML = `${APIinfo}`;
         }
@@ -56,6 +59,7 @@ const showSeasons = async() => {
         const image = document.createElement('img');
         if(element.image === null){
             image.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
+            image.style.height = "200px";
         } else {
             image.src = element.image.medium;
         }
@@ -82,7 +86,8 @@ const showSeasons = async() => {
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
-        table.appendChild(tr);
+        // table.appendChild(tr);
+        $(tr).hide().appendTo(table).fadeIn(1000);
     }
     )
 }
@@ -129,7 +134,7 @@ const showEpisodes = async(id) =>{
         tr.appendChild(td3);
         table.appendChild(tr);
     }
-    $('#episodetable').show();
+    $('#episodetable').fadeIn(1000);
     $('#seasontable').hide();
     $('.goBack').show();
 }
@@ -186,33 +191,11 @@ const showCast = async () => {
     for (let castMember of cast){
         console.log(castMember);
         const castTab = document.querySelector('#casttab');
-        const castWrapper = document.createElement('div');
         const characterWrapper = document.createElement('div');
-        const personWrapper = document.createElement('div');
-        const betweenLine = document.createElement('div');
-        castWrapper.setAttribute('id', `cast-wrapper${index}`);
-        castWrapper.classList.add(`cast-wrapper`);
         characterWrapper.setAttribute('id', `character-wrapper${index}`);
         characterWrapper.classList.add(`character-wrapper`);
-        personWrapper.setAttribute('id', `person-wrapper${index}`);
-        personWrapper.classList.add(`person-wrapper`);
-        betweenLine.setAttribute('id', `betweenLine${index}`);
-        betweenLine.classList.add(`betweenLine`);
         const  characterImage = document.createElement('img');
         const  characterName = document.createElement('p');
-        const  personImage = document.createElement('img');
-        const  personName = document.createElement('p');
-        if(castMember.person.image === null){
-            personImage.src = "images/noimageavailable.gif";
-            personImage.style.height = "382px";
-            personImage.style.width = "272px";
-            personImage.style.borderRadius = "10px";
-        } else {
-            personImage.src = castMember.person.image.medium;
-            personImage.style.height = "382px";
-            personImage.style.width = "272px";
-            personImage.style.borderRadius = "10px";
-        }
         if(castMember.character.image === null){
             characterImage.src = "images/noimageavailable.gif";
             characterImage.style.height = "382px";
@@ -224,32 +207,14 @@ const showCast = async () => {
             characterImage.style.width = "272px";
             characterImage.style.borderRadius = "10px";
         }
-        characterName.innerHTML = `${castMember.character.name}`;
-        personName.innerHTML = `${castMember.person.name}`;
-        personImage.setAttribute('id', `person-image${index}`);
+        characterName.innerHTML = `<strong>${castMember.person.name}</strong> <br> as  <br><strong>${castMember.character.name}</strong>`;
         characterImage.setAttribute('id', `character-image${index}`);
-        personImage.classList.add(`person-image`);
         characterImage.classList.add(`character-image`);
-        personName.setAttribute('id', `person-name${index}`);
-        personName.classList.add(`person-name`);
-        personName.addEventListener("click",async () => {
-            const castPerson = await axios.get(`${baseURL}people/${castMember.person.id}`);
-            console.log(castPerson);
-        });
         characterName.setAttribute('id', `character-name${index}`);
         characterName.classList.add(`character-name`);
-        characterName.addEventListener("click",async () => {
-            const castcharacter = await axios.get(`${baseURL}characters/${castMember.character.id}`);
-            console.log(castcharacter);
-        });
-        personWrapper.appendChild(personImage);
-        personWrapper.appendChild(personName);
         characterWrapper.appendChild(characterImage);
         characterWrapper.appendChild(characterName);
-        castWrapper.appendChild(personWrapper);
-        castWrapper.appendChild(betweenLine);
-        castWrapper.appendChild(characterWrapper);
-        castTab.appendChild(castWrapper);
+        castTab.appendChild(characterWrapper);
         index++;
     }
 };

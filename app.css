@@ -105,7 +105,7 @@ border: 1px solid rgba(161, 161, 161, 0.3);
     flex-direction: column;
     justify-content: flex-start;
     gap: 50px;
-    width: 500px;
+    min-width: 500px;
     margin-top: 50px;
     position:sticky;
     top: 20px;
@@ -123,4 +123,12 @@ select{
 .buttons{
     display: flex;
     gap: 20px;
+}
+
+#or{
+    font-size:20px; 
+    color:aliceblue;
+    display:flex;
+    height: 100%;
+    margin: 0;
 }
