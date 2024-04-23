@@ -138,7 +138,13 @@ const createDropdowns = async (keyword) => {
         }
     }; 
 }
-
+const returnToDefaultValue = (defaultvalue) => {
+    if(defaultvalue === "letters"){
+        document.querySelector('#starsDefault').selected = 'selected';
+    } else {
+        document.querySelector('#alphabetDefault').selected = 'selected';
+    }
+}
 const filterShows = async () => {
     await showInterface();
     $('#showlist').empty();
@@ -149,8 +155,6 @@ const filterShows = async () => {
     const tvShows = document.querySelector('#showlist');
     let index = 0;
     if(starOrder !== "default"){
-        alphab = "default";
-        document.querySelector('#alphabetDefault').selected = 'selected';
         switch(starOrder){
             case "ascending":
                 list.sort((a, b) => a.rating - b.rating);
@@ -162,8 +166,6 @@ const filterShows = async () => {
                 break
         }
     } else if(alphab !== "default"){
-        starOrder = "default";
-        document.querySelector('#starsDefault').selected = 'selected';
     switch(alphab){
         case "A-Z":
             list.sort((a, b) => {

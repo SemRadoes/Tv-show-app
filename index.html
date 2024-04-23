@@ -32,13 +32,13 @@
             </div>
             <div class="dropdowns">
                 <div class="sorting">
-                    <select class="form-select" id="sort-by-stars">
+                    <select class="form-select" id="sort-by-stars" onchange="returnToDefaultValue('stars')">
                       <option id="starsDefault" value="default">Sort by stars</option>
                       <option value="ascending">Ascending &uarr;</option>
                       <option value="descending">Descending &darr;</option>
                     </select>
                     <p id="or">or</p>
-                    <select class="form-select" id="sort-by-alphabet">
+                    <select class="form-select" id="sort-by-alphabet" onchange="returnToDefaultValue('letters')">
                       <option id="alphabetDefault" value="default">Sort alphabetically</option>
                       <option value="A-Z">A-Z</option>
                       <option value="Z-A">Z-A</option>
