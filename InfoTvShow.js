@@ -27,6 +27,7 @@ const fillInfo = (element, APIinfo) => {
     }
 }
 
+const createTable
 const showOfID = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}`);
     const res = overview.data;
@@ -47,24 +48,33 @@ const showSeasons = async() => {
     const res = overview.data;
     console.log(res);
     fillInfo("#numofseasons", res.length);
-    res.forEach((element) => {
-        const table = document.querySelector('#seasontable');
+    const table = document.querySelector('#seasontable');
+    for (let element of res){
         const tr = document.createElement('tr');
         const th = document.createElement('th');
         const td1 = document.createElement('td');
         const td2 = document.createElement('td');
         const td3 = document.createElement('td');
         const td4 = document.createElement('td');
-        th.innerHTML = `${element.number}`;
+        if(element.number === null){
+            th.innerHTML = ``;
+        } else {
+            th.innerHTML = `${element.number}`;
+        }
         const image = document.createElement('img');
         if(element.image === null){
             image.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
-            image.style.height = "200px";
+            image.style.height = "295px";
+            image.style.width = "210px";
         } else {
             image.src = element.image.medium;
         }
         td1.appendChild(image);
-        td2.innerHTML = formatDates(element.premiereDate, "-");
+        if(element.premiereDate !== null){
+            td2.innerHTML = formatDates(element.premiereDate, "-");
+        }else{
+            td2.innerHTML = `<p>no date available</p>`
+        }
         if(element.summary === "" || element.summary === null){
             td3.innerHTML = `<p>no summary available</p>`;  
         } else {
@@ -89,7 +99,6 @@ const showSeasons = async() => {
         // table.appendChild(tr);
         $(tr).hide().appendTo(table).fadeIn(1000);
     }
-    )
 }
 
 const showEpisodes = async(id) =>{
