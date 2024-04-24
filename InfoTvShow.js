@@ -6,6 +6,7 @@ const formatDates = (APIinfo, splitter) =>{
     return `${splitted[2]}/${splitted[1]}/${splitted[0]}`;
 }
 const fillInfo = (element, APIinfo) => {
+    console.log(element);
     if(element === "#showimage"){
         document.querySelector(`${element}`).src = `${APIinfo}`;
     } else {
@@ -27,7 +28,7 @@ const fillInfo = (element, APIinfo) => {
     }
 }
 
-const createTable
+
 const showOfID = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}`);
     const res = overview.data;
@@ -50,99 +51,109 @@ const showSeasons = async() => {
     fillInfo("#numofseasons", res.length);
     const table = document.querySelector('#seasontable');
     for (let element of res){
-        const tr = document.createElement('tr');
-        const th = document.createElement('th');
-        const td1 = document.createElement('td');
-        const td2 = document.createElement('td');
-        const td3 = document.createElement('td');
-        const td4 = document.createElement('td');
+        let tr = document.createElement('tr');
+        let th = document.createElement('th');
+        let td1 = document.createElement('td');
+        let td2 = document.createElement('td');
+        let td3 = document.createElement('td');
+        let td4 = document.createElement('td');
         if(element.number === null){
-            th.innerHTML = ``;
+            th.innerHTML = `-`;
         } else {
             th.innerHTML = `${element.number}`;
         }
         const image = document.createElement('img');
         if(element.image === null){
             image.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
-            image.style.height = "295px";
-            image.style.width = "210px";
-        } else {
-            image.src = element.image.medium;
-        }
-        td1.appendChild(image);
-        if(element.premiereDate !== null){
-            td2.innerHTML = formatDates(element.premiereDate, "-");
+                image.style.height = "295px";
+                image.style.width = "210px";
         }else{
-            td2.innerHTML = `<p>no date available</p>`
-        }
+                image.src = element.image.medium;
+                image.style.height = "295px";
+                image.style.width = "210px";
+            }
+        td1.appendChild(image);
+            const episodesbutton = document.createElement('BUTTON');
+            episodesbutton.classList.add('btn');
+            episodesbutton.classList.add('btn-light');
+            episodesbutton.setAttribute('id', `season${element.number}`);
+            episodesbutton.innerHTML = `Season ${element.number} episodes`;
+            episodesbutton.addEventListener('click', function(){
+                showEpisodes(element.id);
+            });
+            td2.appendChild(episodesbutton);
         if(element.summary === "" || element.summary === null){
-            td3.innerHTML = `<p>no summary available</p>`;  
+            td4.innerHTML = `<p>no summary available</p>`;  
         } else {
-            td3.innerHTML = element.summary;    
+            td4.innerHTML = element.summary;  
+        }  
+        if(element.premiereDate !== null){
+            td3.innerHTML = formatDates(element.premiereDate, "-");
+        }else{
+            td3.innerHTML = `<p>no date available</p>`
         }
-
-        const episodesbutton = document.createElement('BUTTON');
-        episodesbutton.classList.add('btn');
-        episodesbutton.classList.add('btn-light');
-        episodesbutton.setAttribute('id', `season${element.number}`);
-        episodesbutton.innerHTML = `Season ${element.number} episodes`;
-        episodesbutton.addEventListener('click', async function(){
-            showEpisodes(element.id);
-        });
-
-        td4.appendChild(episodesbutton);
         tr.appendChild(th);
         tr.appendChild(td1);
         tr.appendChild(td2);
         tr.appendChild(td3);
         tr.appendChild(td4);
-        // table.appendChild(tr);
-        $(tr).hide().appendTo(table).fadeIn(1000);
+        table.appendChild(tr);
+        $(table).hide();
     }
+    $('#seasontable').fadeIn(1000);
 }
 
 const showEpisodes = async(id) =>{
-    
     const overview = await axios.get(`${baseURL}seasons/${id}/episodes`);
     const res = overview.data;
     const table = document.querySelector('#episodetable');
-    for (let episode of res){
-        const tr = document.createElement('tr');
-        const th = document.createElement('th');
-        const td1 = document.createElement('td');
-        const td2 = document.createElement('td');
-        const td3 = document.createElement('td');
-        const td4 = document.createElement('td');
-        if(episode.number === null){
-            th.innerHTML = ``;
+    for (let element of res){
+        let tr = document.createElement('tr');
+        let th = document.createElement('th');
+        let td1 = document.createElement('td');
+        let td2 = document.createElement('td');
+        let td3 = document.createElement('td');
+        let td4 = document.createElement('td');
+        if(element.number === null){
+            th.innerHTML = `-`;
         } else {
-            th.innerHTML = `${episode.number}`;
+            th.innerHTML = `${element.number}`;
         }
         const image = document.createElement('img');
-        if(episode.image === null){
+        if(element.image === null){
             image.src = "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg";
-            image.style.height = "140px";
-            image.style.width = "250px";
-        } else {
-            image.src = episode.image.medium;
-        }
-    
+                image.style.height = "140px";
+                image.style.width = "240px";
+        }else{
+                image.src = element.image.medium;
+                image.style.height = "140px";
+                image.style.width = "240px";
+            }
         td1.appendChild(image);
-        td2.innerHTML = formatDates(episode.airdate,"-");
-        td4.innerHTML = episode.name;
-        if(episode.summary === "" || episode.summary === null){
-            td3.innerHTML = `<p>no summary available</p>`;  
+        if(element.name === "" || element.name === null){
+            td2.innerHTML = `<p>no summary available</p>`;  
         } else {
-            td3.innerHTML = episode.summary;    
+            td2.innerHTML = element.name;  
+        }  
+        if(element.airdate !== null){
+            td3.innerHTML = formatDates(element.airdate, "-");
+        }else{
+            td3.innerHTML = `<p>no date available</p>`
         }
-
+        if(element.summary === "" || element.summary === null){
+            td4.innerHTML = `<p>no summary available</p>`;  
+        } else {
+            td4.innerHTML = element.summary;  
+        }  
         tr.appendChild(th);
         tr.appendChild(td1);
-        tr.appendChild(td4);
         tr.appendChild(td2);
         tr.appendChild(td3);
+        tr.appendChild(td4);
         table.appendChild(tr);
+        $(table).hide();
     }
+    $('#seasontable').fadeIn(1000);
     $('#episodetable').fadeIn(1000);
     $('#seasontable').hide();
     $('.goBack').show();
@@ -151,14 +162,19 @@ const showEpisodes = async(id) =>{
 const showCrew = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}/crew`);
     const crew = overview.data;
+    console.log(crew);
     const names = [];
     let index = 0;
+    const crewWrapper = document.querySelector('#crewtab');
+    if(crew.length === 0){
+        console.log('data');
+        crewWrapper.innerHTML = "<p style='color: #5D7481; font-size: 20px;'>we couldn't find any data</p>";
+    } else {
     for (let crewMember of crew){
         if(names.includes(crewMember.person.name)){
             const existingWrapper = document.querySelector(`#crew-function${index - 1}`);
             existingWrapper.innerHTML += `<br>| ${crewMember.type}`;
         } else {
-            const crewWrapper = document.querySelector('#crewtab');
             const crewMamberWrapper = document.createElement('div');
             crewMamberWrapper.setAttribute('id', `crew-wrapper${index}`);
             crewMamberWrapper.classList.add(`crew-wrapper`);
@@ -193,13 +209,17 @@ const showCrew = async () => {
         }
     }
 }
+}
 const showCast = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}/cast`);
     const cast = overview.data;
     let index = 0;
+    const castTab = document.querySelector('#casttab');
+    if(cast.length === 0){
+        castTab.innerHTML = "<p style='color: #5D7481; font-size: 20px;'>we couldn't find any data</p>";
+    } else {
     for (let castMember of cast){
         console.log(castMember);
-        const castTab = document.querySelector('#casttab');
         const characterWrapper = document.createElement('div');
         characterWrapper.setAttribute('id', `character-wrapper${index}`);
         characterWrapper.classList.add(`character-wrapper`);
@@ -226,6 +246,7 @@ const showCast = async () => {
         castTab.appendChild(characterWrapper);
         index++;
     }
+}
 };
 
 

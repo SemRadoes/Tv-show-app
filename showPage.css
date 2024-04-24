@@ -143,15 +143,3 @@ body{
 .character-name{
     font-size: 20px;
 }
-.character-name:hover{
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.person-name{
-    font-size: 30px;
-}
-.person-name:hover{
-    text-decoration: underline;
-    cursor: pointer;
-}
