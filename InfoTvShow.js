@@ -236,15 +236,12 @@ const showCast = async () => {
         const  characterName = document.createElement('p');
         if(castMember.character.image === null){
             characterImage.src = "images/noimageavailable.gif";
-            characterImage.style.height = "382px";
-            characterImage.style.width = "272px";
-            characterImage.style.borderRadius = "10px";
         } else {
             characterImage.src = castMember.character.image.medium;
-            characterImage.style.height = "382px";
-            characterImage.style.width = "272px";
-            characterImage.style.borderRadius = "10px";
         }
+        characterImage.style.height = "382px";
+        characterImage.style.width = "272px";
+        characterImage.style.borderRadius = "10px";
         characterName.innerHTML = `<strong>${castMember.person.name}</strong> <br> as  <br><strong>${castMember.character.name}</strong>`;
         characterImage.setAttribute('id', `character-image${index}`);
         characterImage.classList.add(`character-image`);
