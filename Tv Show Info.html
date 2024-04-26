@@ -75,61 +75,70 @@
     </section>
 </body>
 <script>
+    const crewTab = $("#crewtab");
+    const castTab = $("#casttab");
+    const episodeTable = $("#episodetable");
+    const goBack = $(".goBack");
+    const seasonTable = $("#seasontable");
+    const crewButton = $("#crewButton");
+    const episodeButton = $("#episodeButton");
+    const castButton = $("#castButton");
+    const characterTab = $(".character-tab");
     $(document).ready(async function() { 
         showOfID();
         showSeasons();
-        $("#postertab").hide();
-        $("#crewtab").hide();
-        $("#casttab").hide();
-        $('#episodetable').hide();
-        $('.goBack').hide();
+        crewTab.hide();
+        castTab.hide();
+        episodeTable.hide();
+        goBack.hide();
     });
-    $('.goBack').click(async function() {
-        $('#seasontable').fadeIn(1000);
-        $('#episodetable').empty();
-            $('#episodetable').hide();
-            $('.goBack').hide();
+    goBack.click(async function() {
+        seasonTable.fadeIn(1000);
+        episodeTable.empty();
+        episodeTable.hide();
+        goBack.hide();
         });
     function showInfo(info){
         switch(info) {
             case "episodes":
-                $('.goBack').hide();
-                $("#crewtab").hide();
-                $("#casttab").hide();
-                $('#episodetable').hide();
-                $('#episodetable').empty();
-                $('#seasontable').fadeIn(1000);
-                $("#crewButton").removeClass('activeonload');
-                $('#episodeButton').addClass('activeonload');
-                $('#castButton').removeClass('activeonload');
+                goBack.hide();
+                crewTab.hide();
+                crewTab.empty();
+                castTab.hide();
+                castTab.empty();
+                episodeTable.hide();
+                episodeTable.empty();
+                seasonTable.fadeIn(1000);
+                crewButton.removeClass('activeonload');
+                episodeButton.addClass('activeonload');
+                castButton.removeClass('activeonload');
                 break;
             case "crew":
                 showCrew();
-                $('.goBack').hide();
-                $("#crewtab").fadeIn(1000);
-                $('#seasontable').hide();
-                $('#episodetable').hide();
-                $('#episodetable').empty();
-                $("#casttab").hide();
-                $("#casttab").empty();
-                $("#crewButton").addClass('activeonload');
-                $('#episodeButton').removeClass('activeonload');
-                $('#castButton').removeClass('activeonload');
+                crewTab.fadeIn(1000);
+                seasonTable.hide();
+                episodeTable.hide();
+                episodeTable.empty();
+                castTab.hide();
+                castTab.empty();
+                goBack.hide();
+                crewButton.addClass('activeonload');
+                episodeButton.removeClass('activeonload');
+                castButton.removeClass('activeonload');
                 break;
             case "cast":
                 showCast();
-                $('.goBack').hide();
-                $("#crewtab").hide();
-                $("#crewtab").empty();
-                $("#casttab").fadeIn(1000);
-                $(".person-tab").hide();
-                $(".character-tab").hide();
-                $('#seasontable').hide();
-                $('#episodetable').hide();
-                $('#episodetable').empty();
-                $("#crewButton").removeClass('activeonload');
-                $('#episodeButton').removeClass('activeonload');
-                $('#castButton').addClass('activeonload');
+                goBack.hide();
+                crewTab.hide();
+                crewTab.empty();
+                castTab.fadeIn(1000);
+                characterTab.hide();
+                seasonTable.hide();
+                episodeTable.hide();
+                episodeTable.empty();
+                crewButton.removeClass('activeonload');
+                episodeButton.removeClass('activeonload');
+                castButton.addClass('activeonload');
                 break;
             default:
                 // code block
