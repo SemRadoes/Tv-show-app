@@ -107,6 +107,19 @@ const showEpisodes = async(id) =>{
     const overview = await axios.get(`${baseURL}seasons/${id}/episodes`);
     const res = overview.data;
     const table = document.querySelector('#episodetable');
+    let tr = document.createElement('tr');
+    let th1 = document.createElement('th');
+    let th2 = document.createElement('th');
+    let th3 = document.createElement('th');
+    let th4 = document.createElement('th');
+    let th5 = document.createElement('th');
+    let th1.innerHTML = "ID";
+    let th2.innerHTML = "IMAGE";
+    let th3.innerHTML = "NAME";
+    let th4.innerHTML = "AIRED";
+    let th5.innerHTML = "SUMMARY";
+    tr.append(th1, th2, th3, th4, th5);
+    table.appendChild(tr);
     for (let element of res){
         let tr = document.createElement('tr');
         let th = document.createElement('th');
