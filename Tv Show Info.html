@@ -75,20 +75,26 @@
     const crewButton = $("#crewButton");
     const episodeButton = $("#episodeButton");
     const castButton = $("#castButton");
-    const hideDivs = (structure) => {
-        structure.hide();
+    const hideDivs = (...args) => {
+        for (arg of args){
+            arg.hide();
+        }
     }
-    const emptyDivs = (structure) => {
-        structure.empty();
+    const emptyDivs = (...args) => {
+        for (arg of args){
+            arg.empty();
+        }
     }
-    const fadeinDivs = (structure) => {
-        structure.fadeIn(1000);
+    const fadeinDivs = (arg) => {
+        arg.fadeIn(1000);
     }
-    const removeClassFromDiv = (structure) => {
-        structure.removeClass('activeonload');
+    const removeClassFromDiv = (...args) => {
+        for (arg of args){
+            arg.removeClass('activeonload');
+        }
     }
-    const addClassToDiv = (structure) => {
-        structure.addClass('activeonload');
+    const addClassToDiv = (arg) => {
+        arg.addClass('activeonload');
     }
     $(document).ready(async function() { 
         showOfID();
@@ -107,43 +113,27 @@
     function showInfo(info){
         switch(info) {
             case "episodes":
-                hideDivs(goBack);
-                hideDivs(crewTab);
-                emptyDivs(crewTab);
-                hideDivs(castTab);
-                emptyDivs(castTab);
-                hideDivs(episodeTable);
-                emptyDivs(episodeTable);
+                hideDivs(goBack, crewTab, castTab, episodeTable);
+                emptyDivs(crewTab, castTab, episodeTable);
                 fadeinDivs(seasonTable);
-                removeClassFromDiv(crewButton);
+                removeClassFromDiv(crewButton, castButton);
                 addClassToDiv(episodeButton);
-                removeClassFromDiv(castButton);
                 break;
             case "crew":
                 showCrew();
+                hideDivs(seasonTable, episodeTable, castTab, goBack);
                 fadeinDivs(crewTab)
-                hideDivs(seasonTable);
-                hideDivs(episodeTable);
-                hideDivs(castTab);
-                hideDivs(goBack);
-                emptyDivs(episodeTable);
-                emptyDivs(goBack);
-                removeClassFromDiv(episodeButton);
+                emptyDivs(episodeTable, goBack);
+                removeClassFromDiv(episodeButton, castButton);
                 addClassToDiv(crewButton);
-                removeClassFromDiv(castButton);
                 break;
             case "cast":
                 showCast();
-                hideDivs(goBack);
-                hideDivs(crewTab);
-                hideDivs(seasonTable);
-                hideDivs(episodeTable);
-                emptyDivs(crewTab);
-                emptyDivs(episodeTable);
+                hideDivs(goBack, crewTab, seasonTable, episodeTable);
+                emptyDivs(crewTab, episodeTable);
                 fadeinDivs(castTab);
-                removeClassFromDiv(crewButton);
+                removeClassFromDiv(crewButton, episodeButton);
                 addClassToDiv(castButton);
-                removeClassFromDiv(episodeButton);
                 break;
             default:
                 // code block
