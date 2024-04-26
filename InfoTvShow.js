@@ -195,15 +195,12 @@ const showCrew = async () => {
             const  crewFunction = document.createElement('p');
             if(crewMember.person.image === null){
                 crewImage.src = "images/noimageavailable.gif";
-                crewImage.style.height = "382px";
-                crewImage.style.width = "272px";
-                crewImage.style.borderRadius = "10px";
             } else {
                 crewImage.src = crewMember.person.image.medium;
-                crewImage.style.height = "382px";
-                crewImage.style.width = "272px";
-                crewImage.style.borderRadius = "10px";
             }
+            crewImage.style.height = "382px";
+            crewImage.style.width = "272px";
+            crewImage.style.borderRadius = "10px";
             crewName.innerHTML = crewMember.person.name;
             crewFunction.innerHTML = `| ${crewMember.type}`;
             crewImage.setAttribute('id', `crew-image${index}`);
