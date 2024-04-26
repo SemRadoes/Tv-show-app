@@ -99,16 +99,12 @@
     $(document).ready(async function() { 
         showOfID();
         showSeasons();
-        hideDivs(crewTab);
-        hideDivs(castTab);
-        hideDivs(episodeTable);
-        hideDivs(goBack);
+        hideDivs(crewTab, castTab, episodeTable, goBack);
     });
     goBack.click(async function() {
         fadeinDivs(seasonTable);
         emptyDivs(episodeTable);
-        hideDivs(episodeTable);
-        hideDivs(goBack);
+        hideDivs(episodeTable, goBack);
         });
     function showInfo(info){
         switch(info) {
