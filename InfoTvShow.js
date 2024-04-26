@@ -113,11 +113,11 @@ const showEpisodes = async(id) =>{
     let th3 = document.createElement('th');
     let th4 = document.createElement('th');
     let th5 = document.createElement('th');
-    let th1.innerHTML = "ID";
-    let th2.innerHTML = "IMAGE";
-    let th3.innerHTML = "NAME";
-    let th4.innerHTML = "AIRED";
-    let th5.innerHTML = "SUMMARY";
+    th1.innerHTML = "ID";
+    th2.innerHTML = "IMAGE";
+    th3.innerHTML = "NAME";
+    th4.innerHTML = "AIRED";
+    th5.innerHTML = "SUMMARY";
     tr.append(th1, th2, th3, th4, th5);
     table.appendChild(tr);
     for (let element of res){
