@@ -98,9 +98,9 @@ const showSeasons = async() => {
         tr.appendChild(td3);
         tr.appendChild(td4);
         table.appendChild(tr);
-        $(table).hide();
     }
-    $('#seasontable').fadeIn(1000);
+    $(table).hide();
+    $(table).fadeIn(1000);
 }
 
 const showEpisodes = async(id) =>{
@@ -164,11 +164,10 @@ const showEpisodes = async(id) =>{
         tr.appendChild(td3);
         tr.appendChild(td4);
         table.appendChild(tr);
-        $(table).hide();
     }
-    $('#seasontable').fadeIn(1000);
-    $('#episodetable').fadeIn(1000);
+    $(table).hide();
     $('#seasontable').hide();
+    $('#episodetable').fadeIn(1000);
     $('.goBack').show();
 }
 
