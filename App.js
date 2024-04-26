@@ -6,25 +6,29 @@ const createShowElements = (element, className, content) => {
         para = document.createElement(element);
         para.src=`${content}`;
         para.classList.add(className);
+    } else if(content.slice(0,5) === "image") {
+        para = document.createElement(element);
+        para.src=`${content}`;
+        para.classList.add(className);
     }else {
         if(className === "genres"){
             let genres = "";
             para = document.createElement(element);
             para.classList.add(className);
-            if(content.length !== 0){
+            if(content.length){
                 const genreArray = content.split(",");
                 genreArray.forEach(element => {
                     genres += `| ${element} `;
                 });
                 para.innerHTML = genres;
             } else {
-                para.innerHTML = genres += "| no info available";
+                para.innerHTML = "| no genres available";
             }
         } else {
             para = document.createElement(element);
             para.classList.add(className);
             let text;
-            if(content === "null" || content === ""){
+            if(!content){
                 text = document.createTextNode("-");
             } else {
                 text = document.createTextNode(content);
@@ -55,7 +59,7 @@ const showsWithFiltering = (arg, element) => {
         filteredShow.classList.add("movieScladeOnMouseOver");
     });
     filteredShow.addEventListener("click", () => {
-        location.href=`Tv Show Info.html?id=${arg.id}`;
+        location.href=`tv-show-info.html?id=${arg.id}`;
     });
 }
 let list = [];
@@ -65,30 +69,23 @@ const showInterface = async(arg) => {
         overview = await axios.get(`https://api.tvmaze.com/search/shows?q=${arg}`);
         const res = overview.data;
         console.log(overview.data);
+        
         list = res.map(element => {
-            if(element.show.image !== null || element.show.genres.length || element.show.runtime !== null || element.show.rating.average !== null || element.show.premiered !== null){
                 return interface = {
                 id: element.show.id,
-                name: element.show.name,
-                genres: element.show.genres,
                 language: element.show.language,
-                duration: element.show.runtime,
-                image: element.show.image.medium,
-                rating: element.show.rating.average,
-                premiered: element.show.premiered.slice(0,4)
+                ...(element.show.name && {name: element.show.name}),
+                ...(!element.show.name && {name: "no info available"}),
+                ...(element.show.runtime && {runtime: element.show.runtime}),
+                ...(!element.show.runtime && {runtime: "no info available"}),
+                ...(element.show.genres && {genres: element.show.genres}),
+                ...(element.show.image && {image: element.show.image.medium}),
+                ...(!element.show.image && {image: "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg"}),
+                ...(element.show.rating && {rating: element.show.rating.average}),
+                ...(!element.show.rating && {rating: "-"}),
+                ...(element.show.premiered && {premiered: element.show.premiered.slice(0,4)}),
+                ...(!element.show.premiered && {premiered: "no info available"})
                 };
-            } else {
-                return interface = {
-                    id: element.show.id,
-                    name: element.show.name,
-                    genres: "unknown",
-                    language: element.show.language,
-                    duration: "unknown",
-                    image: "unknown",
-                    rating: "unknown",
-                    premiered: "unknown"
-                    };
-            }
         });
     } else {
         overview = await axios.get(baseURL);
@@ -97,24 +94,31 @@ const showInterface = async(arg) => {
         list = res.map(element => {
             return interface = {
                 id: element.id,
-                name: element.name,
-                genres: element.genres,
                 language: element.language,
-                duration: element.runtime,
-                image: element.image.medium,
-                rating: element.rating.average,
-                premiered: element.premiered.slice(0,4),
+                ...(element.name && {name: element.name}),
+                ...(!element.name && {name: "no info available"}),
+                ...(element.runtime && {runtime: element.runtime}),
+                ...(!element.runtime && {runtime: "no info available"}),
+                ...(element.genres && {genres: element.genres}),
+                ...(element.image && {image: element.image.medium}),
+                ...(!element.image && {image: "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg"}),
+                ...(element.rating && {rating: element.rating.average}),
+                ...(!element.rating && {rating: "-"}),
+                ...(element.premiered && {premiered: element.premiered.slice(0,4)}),
+                ...(!element.premiered && {premiered: "no info available"})
             };
         });
     }
     return list;
 }
 const shows = async () => {
+    $("body").css("cursor", "wait");
     await showInterface();
     const tvShows = document.querySelector('#showlist');
     list.forEach(element => {
         showsWithFiltering(element, tvShows);
     });
+    $("body").css("cursor", "default");
 }
 
 const createDropdowns = async (keyword) => {
@@ -146,6 +150,7 @@ const returnToDefaultValue = (defaultvalue) => {
     }
 }
 const filterShows = async () => {
+    $("body").css("cursor", "wait");
     await showInterface();
     $('#showlist').empty();
     const genre = $('#genre').val();
@@ -219,18 +224,22 @@ const filterShows = async () => {
     if(index === 0){
         tvShows.innerHTML = "<h3 style='color: rgb(93, 116, 129);'>No search results</h3>";
     }
+    $("body").css("cursor", "default");
 }
 
 const resetShows = async () => {
+    $("body").css("cursor", "wait");
     await showInterface();
     $('#showlist').empty();
     const tvShows = document.querySelector('#showlist');
     for (let show of list){
             showsWithFiltering(show, tvShows);
     }
+    $("body").css("cursor", "default");
 }
 
 const searchQuery = async() => {
+    $("body").css("cursor", "wait");
     const input = $('#searchQuery').val();
     $('#showlist').empty();
     await showInterface(input);
@@ -238,5 +247,6 @@ const searchQuery = async() => {
     for (let show of list){
         showsWithFiltering(show, tvShows);
     }
+    $("body").css("cursor", "default");
 }
 

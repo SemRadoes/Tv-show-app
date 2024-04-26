@@ -179,7 +179,6 @@ const showCrew = async () => {
     let index = 0;
     const crewWrapper = document.querySelector('#crewtab');
     if(crew.length === 0){
-        console.log('data');
         crewWrapper.innerHTML = "<p style='color: #5D7481; font-size: 20px;'>we couldn't find any data</p>";
     } else {
     for (let crewMember of crew){
