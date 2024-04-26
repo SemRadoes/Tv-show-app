@@ -55,7 +55,7 @@ const showsWithFiltering = (arg, element) => {
         filteredShow.classList.add("movieScladeOnMouseOver");
     });
     filteredShow.addEventListener("click", () => {
-        location.href=`/Tv Show Info.html?id=${arg.id}`;
+        location.href=`Tv Show Info.html?id=${arg.id}`;
     });
 }
 let list = [];

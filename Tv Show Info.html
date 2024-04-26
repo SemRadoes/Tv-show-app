@@ -8,7 +8,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
-<script src="/InfoTvShow.js" defer></script>
+<script src="InfoTvShow.js" defer></script>
 <link rel="stylesheet" href="showPage.css">
 
     <title></title>
@@ -75,7 +75,6 @@
     const crewButton = $("#crewButton");
     const episodeButton = $("#episodeButton");
     const castButton = $("#castButton");
-    const characterTab = $(".character-tab");
     const hideDivs = (structure) => {
         structure.hide();
     }
@@ -122,30 +121,29 @@
                 break;
             case "crew":
                 showCrew();
-                crewTab.fadeIn(1000);
-                seasonTable.hide();
-                episodeTable.hide();
-                episodeTable.empty();
-                castTab.hide();
-                castTab.empty();
-                goBack.hide();
-                crewButton.addClass('activeonload');
-                episodeButton.removeClass('activeonload');
-                castButton.removeClass('activeonload');
+                fadeinDivs(crewTab)
+                hideDivs(seasonTable);
+                hideDivs(episodeTable);
+                hideDivs(castTab);
+                hideDivs(goBack);
+                emptyDivs(episodeTable);
+                emptyDivs(goBack);
+                removeClassFromDiv(episodeButton);
+                addClassToDiv(crewButton);
+                removeClassFromDiv(castButton);
                 break;
             case "cast":
                 showCast();
-                goBack.hide();
-                crewTab.hide();
-                crewTab.empty();
-                castTab.fadeIn(1000);
-                characterTab.hide();
-                seasonTable.hide();
-                episodeTable.hide();
-                episodeTable.empty();
-                crewButton.removeClass('activeonload');
-                episodeButton.removeClass('activeonload');
-                castButton.addClass('activeonload');
+                hideDivs(goBack);
+                hideDivs(crewTab);
+                hideDivs(seasonTable);
+                hideDivs(episodeTable);
+                emptyDivs(crewTab);
+                emptyDivs(episodeTable);
+                fadeinDivs(castTab);
+                removeClassFromDiv(crewButton);
+                addClassToDiv(castButton);
+                removeClassFromDiv(episodeButton);
                 break;
             default:
                 // code block
