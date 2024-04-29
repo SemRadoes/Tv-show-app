@@ -1,5 +1,10 @@
 # Tv-show-app
 
+a app made with html, css and javascript(with jquery)
+image below on how the app works
+
+enjoy:
+
 ![alt text](demo/demo1.JPG)
 this is the homepage
 
