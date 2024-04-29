@@ -9,7 +9,7 @@ enjoy:
 this is the homepage
 
 ![alt text](demo/demo2.JPG)
-search results are accurate up to to typos
+search results are accurate up to two typos
 
 ![text](<demo/demo3 sorting by alphabet asc.JPG>)
 alphabetically sorted shows
