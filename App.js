@@ -22,17 +22,12 @@ const createShowElements = (element, className, content) => {
                 });
                 para.innerHTML = genres;
             } else {
-                para.innerHTML = "| no genres available";
+                para.innerHTML = content;
             }
         } else {
             para = document.createElement(element);
             para.classList.add(className);
-            let text;
-            if(!content){
-                text = document.createTextNode("-");
-            } else {
-                text = document.createTextNode(content);
-            }
+            const text = document.createTextNode(content);
             para.appendChild(text);
         }
     }
@@ -75,16 +70,17 @@ const showInterface = async(arg) => {
                 id: element.show.id,
                 language: element.show.language,
                 ...(element.show.name && {name: element.show.name}),
-                ...(!element.show.name && {name: "no info available"}),
+                ...(element.show.name === "" && {name: "-"}),
                 ...(element.show.runtime && {runtime: element.show.runtime}),
-                ...(!element.show.runtime && {runtime: "no info available"}),
+                ...(element.show.runtime === null && {runtime: "-"}),
                 ...(element.show.genres && {genres: element.show.genres}),
+                ...(element.show.genres.length === 0 && {genres: "-"}),
                 ...(element.show.image && {image: element.show.image.medium}),
-                ...(!element.show.image && {image: "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg"}),
-                ...(element.show.rating && {rating: element.show.rating.average}),
-                ...(!element.show.rating && {rating: "-"}),
+                ...(element.show.image === null && {image: "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg"}),
+                ...(element.show.rating.average && {rating: element.show.rating.average}),
+                ...(element.show.rating.average === null && {rating: "-"}),
                 ...(element.show.premiered && {premiered: element.show.premiered.slice(0,4)}),
-                ...(!element.show.premiered && {premiered: "no info available"})
+                ...(element.show.premiered === null || element.show.premiered === "" && {premiered: "-"})
                 };
         });
     } else {
