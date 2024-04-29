@@ -63,7 +63,6 @@ const showInterface = async(arg) => {
     if(arg){
         overview = await axios.get(`https://api.tvmaze.com/search/shows?q=${arg}`);
         const res = overview.data;
-        console.log(overview.data);
         
         list = res.map(element => {
                 return interface = {
@@ -86,22 +85,22 @@ const showInterface = async(arg) => {
     } else {
         overview = await axios.get(baseURL);
         const res = overview.data;
-        console.log(overview.data);
         list = res.map(element => {
             return interface = {
-                id: element.id,
-                language: element.language,
-                ...(element.name && {name: element.name}),
-                ...(!element.name && {name: "no info available"}),
-                ...(element.runtime && {runtime: element.runtime}),
-                ...(!element.runtime && {runtime: "no info available"}),
-                ...(element.genres && {genres: element.genres}),
-                ...(element.image && {image: element.image.medium}),
-                ...(!element.image && {image: "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg"}),
-                ...(element.rating && {rating: element.rating.average}),
-                ...(!element.rating && {rating: "-"}),
-                ...(element.premiered && {premiered: element.premiered.slice(0,4)}),
-                ...(!element.premiered && {premiered: "no info available"})
+                id: element.show.id,
+                language: element.show.language,
+                ...(element.show.name && {name: element.show.name}),
+                ...(element.show.name === "" && {name: "-"}),
+                ...(element.show.runtime && {runtime: element.show.runtime}),
+                ...(element.show.runtime === null && {runtime: "-"}),
+                ...(element.show.genres && {genres: element.show.genres}),
+                ...(element.show.genres.length === 0 && {genres: "-"}),
+                ...(element.show.image && {image: element.show.image.medium}),
+                ...(element.show.image === null && {image: "images/depositphotos_227724992-stock-illustration-image-available-icon-flat-vector.jpg"}),
+                ...(element.show.rating.average && {rating: element.show.rating.average}),
+                ...(element.show.rating.average === null && {rating: "-"}),
+                ...(element.show.premiered && {premiered: element.show.premiered.slice(0,4)}),
+                ...(element.show.premiered === null || element.show.premiered === "" && {premiered: "-"})
             };
         });
     }

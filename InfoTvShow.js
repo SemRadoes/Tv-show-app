@@ -6,7 +6,6 @@ const formatDates = (APIinfo, splitter) =>{
     return `${splitted[2]}/${splitted[1]}/${splitted[0]}`;
 }
 const fillInfo = (element, APIinfo) => {
-    console.log(element);
     if(element === "#showimage"){
         document.querySelector(`${element}`).src = `${APIinfo}`;
     } else {
@@ -32,7 +31,6 @@ const fillInfo = (element, APIinfo) => {
 const showOfID = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}`);
     const res = overview.data;
-    console.log(res);
     fillInfo("title", res.name );
     fillInfo("#showimage", res.image.original );
     fillInfo("#showname", res.name );
@@ -47,7 +45,6 @@ const showOfID = async () => {
 const showSeasons = async() => {
     const overview = await axios.get(`${baseURL}shows/${showID}/seasons`);
     const res = overview.data;
-    console.log(res);
     fillInfo("#numofseasons", res.length);
     const table = document.querySelector('#seasontable');
     for (let element of res){
@@ -174,7 +171,6 @@ const showEpisodes = async(id) =>{
 const showCrew = async () => {
     const overview = await axios.get(`${baseURL}shows/${showID}/crew`);
     const crew = overview.data;
-    console.log(crew);
     const names = [];
     let index = 0;
     const crewWrapper = document.querySelector('#crewtab');
@@ -227,7 +223,6 @@ const showCast = async () => {
         castTab.innerHTML = "<p style='color: #5D7481; font-size: 20px;'>we couldn't find any data</p>";
     } else {
     for (let castMember of cast){
-        console.log(castMember);
         const characterWrapper = document.createElement('div');
         characterWrapper.setAttribute('id', `character-wrapper${index}`);
         characterWrapper.classList.add(`character-wrapper`);
